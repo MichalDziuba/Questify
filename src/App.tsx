@@ -1,58 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import { FC, lazy, Suspense } from "react";
+import { Routes, Route } from "react-router-dom";
+import { PrivateRoute } from "./features/privateRoute/privateRoute";
+import { useAppSelector } from "./app/hooks";
 
-function App() {
+const MainPage = lazy(() => import("./pages/main/main"));
+const LandingPage = lazy(() => import("./pages/landingPage/landingPage"));
+const Loader = lazy(() => import("./components/loader/loader"));
+const App: FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+    <div className="w-screen h-screen flex justify-center">
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path="/auth" element={<LandingPage />} />
+
+          <Route path="/" element={<PrivateRoute outlet={<MainPage />} />} />
+
+          <Route path="*" element={<div>Nothing's here</div>} />
+        </Routes>
+      </Suspense>
     </div>
   );
-}
+};
 
 export default App;
