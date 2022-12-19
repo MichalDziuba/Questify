@@ -1,7 +1,7 @@
 import {
   getLocalStorageName,
   getLocalStorageEmail,
-} from "./../features/localstorage/localstorageData";
+} from "../features/localstorage/localstorageData";
 import { getLocalStorageToken } from "../features/localstorage/localstorageData";
 
 import {
@@ -10,13 +10,11 @@ import {
   actionLogoutUser,
   actionAddQuest,
   actionGetAllQuests,
-  actionEditQuest
+  actionEditQuest,
+  actionDeleteQuest,
 } from "./actions";
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
 import { questType } from "../components/quest/quest";
-
-
-
 
 export type AppState = {
   userToken: string;
@@ -28,16 +26,15 @@ export type AppState = {
 };
 
 const initialState: AppState = {
-  userToken: getLocalStorageToken() || "" ,
-  userName: getLocalStorageName() || "" ,
-  userEmail: getLocalStorageEmail() || "" ,
-  items:[],
+  userToken: getLocalStorageToken() || "",
+  userName: getLocalStorageName() || "",
+  userEmail: getLocalStorageEmail() || "",
+  items: [],
   isLoading: false,
   status: "idle",
 };
 
 export const appReducer = createReducer(initialState, (builder) => {
-
   builder
     .addCase(actionLoginUser.pending, (state) => {
       state.isLoading = true;
@@ -88,47 +85,57 @@ export const appReducer = createReducer(initialState, (builder) => {
       state.isLoading = false;
     })
     .addCase(actionAddQuest.fulfilled, (state, action) => {
-      state.items.push(action.payload!)
+      state.items.push(action.payload!);
       state.isLoading = false;
     })
     .addCase(actionGetAllQuests.pending, (state) => {
-     state.status = "pending";
-    //  state.isLoading = true;
-  })
+      state.status = "pending";
+      //  state.isLoading = true;
+    })
     .addCase(actionGetAllQuests.rejected, (state) => {
-    
       state.items = [];
       state.userToken = "";
-       state.userEmail = "";
+      state.userEmail = "";
       state.userName = "";
-      localStorage.clear()
+      localStorage.clear();
       // state.isLoading = false;
-      state.status="rejected"
-  })
+      state.status = "rejected";
+    })
     .addCase(actionGetAllQuests.fulfilled, (state, action) => {
       state.items = action.payload;
       // state.isLoading = false;
     })
     .addCase(actionEditQuest.fulfilled, (state, action) => {
       const payloadData = action.payload;
-     if (payloadData) {
-       const id = payloadData.id;
-       const questData = payloadData.data;
+      if (payloadData) {
+        const questId = payloadData.id;
+        const questData = payloadData.data;
 
-      
-      const quest = state.items.find((item) => item._id === id);
-       if (quest) {
-            
-            const questIndex = state.items.indexOf(quest);
-            console.log(state.items[questIndex]);
-            console.log(questIndex);
-            state.items[questIndex] = {
-              ...state.items[questIndex],
-              ...questData,
-            };
-          }
-      
-
-     }
-  })
+        const quest = state.items.find((item) => item._id === questId);
+        if (quest) {
+          const questIndex = state.items.indexOf(quest);
+          console.log(state.items[questIndex]);
+          state.items[questIndex] = {
+            ...state.items[questIndex],
+            ...questData,
+          };
+        }
+      }
+    })
+    .addCase(actionDeleteQuest.pending, (state) => {
+      console.log("pending");
+    })
+    .addCase(actionDeleteQuest.rejected, (state) => {
+      console.log("rejected");
+    })
+    .addCase(actionDeleteQuest.fulfilled, (state, action) => {
+      const payloadData = action.payload;
+      if (payloadData) {
+        const questId = payloadData.id;
+        const newItemsArray = state.items.filter(
+          (item) => item._id !== questId
+        );
+        state.items = newItemsArray;
+      }
+    });
 });

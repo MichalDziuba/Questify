@@ -4,7 +4,7 @@ import { AiFillStar, AiOutlineDelete } from "react-icons/ai";
 import Calendar from "../../datePicker/datepicker";
 import { GoPrimitiveDot } from "react-icons/go";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { actionAddQuest, actionEditQuest } from "../../../app/actions";
+import { actionAddQuest, actionDeleteQuest, actionEditQuest } from "../../../app/actions";
 import { formatDate } from "../../../features/date/date";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 
@@ -31,7 +31,10 @@ type QuestFormProps = {
   isChallenge: boolean;
   id: string;
 };
-
+export type deleteQuestData = {
+  owner: string,
+  id:string
+}
 const QuestForm: FC<QuestFormProps> = ({
   closeModalFn,
   questCategory,
@@ -91,13 +94,11 @@ const QuestForm: FC<QuestFormProps> = ({
   };
   const handleEdit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const form = e.target as HTMLFormElement;
     const target = e.target as typeof e.target & {
       title: { value: string };
       difficult: { value: string };
       categories: { value: string };
     };
-
     const data: editQuestData = {
       title: target.title.value,
       level: target.difficult.value,
@@ -105,20 +106,21 @@ const QuestForm: FC<QuestFormProps> = ({
       date: `${dateCalendar?.format("DD/MM/YYYY")}`,
       isChallenge: isQuestChallenge,
     };
-    const data2: editQuestPayload = {
+    const dataPayload: editQuestPayload = {
       owner: userEmail,
       id: id,
       data,
     };
-    form.reset();
-    dispatch(actionEditQuest(data2!));
+    dispatch(actionEditQuest(dataPayload));
     closeModalFn()
   };
   const handleDelete = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const form =document.querySelector("#questForm") as HTMLFormElement;
-    console.log(form)
-    form.reset()
+    const payloadData:deleteQuestData = {
+      owner: userEmail,
+      id: id,
+    };
+    dispatch(actionDeleteQuest(payloadData))
   }
   const handleChangeLevel = (
     e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>

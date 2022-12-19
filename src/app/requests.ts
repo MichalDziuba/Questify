@@ -1,5 +1,4 @@
-import { editQuestPayload } from "../components/forms/questForm/questForm";
-import { useAppSelector } from "./hooks";
+import { deleteQuestData, editQuestPayload } from "../components/forms/questForm/questForm";
 import { questType } from "./../components/quest/quest";
 import {
   addToLocalStorage,
@@ -46,17 +45,32 @@ export const logoutUser = async (payload: string) => {
         Authorization: `Bearer ${payload}`,
       },
     });
-  } catch (e) {}
+  } catch (e) {
+    console.log(e);
+  }
 };
 export const addNewQuest = async (payload: questType) => {
-  const token = await getLocalStorageToken();
+  const token = getLocalStorageToken();
   try {
-    await apiClient.post("items/", payload, {
+    const response = await apiClient.post("items/", payload, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return payload;
+
+    console.log(response)
+    const { category, date, isChallenge, level, title, _id } =
+      response.data.data;
+    const quest: questType = {
+      category: category,
+      date: date,
+      isChallenge: isChallenge,
+      level: level,
+      title: title,
+      _id: _id,
+    };
+
+    return quest;
   } catch (e) {
     console.log(e);
   }
@@ -69,7 +83,9 @@ export const getAllQuests = async (payload: string) => {
   });
 
   try {
+    console.log(`tutaj`)
     const data = await response.data.data;
+    console.log(data)
     return data;
   } catch (e) {
     console.log(e);
@@ -77,7 +93,6 @@ export const getAllQuests = async (payload: string) => {
 };
 export const editQuest = async (payload: editQuestPayload) => {
   const token = getLocalStorageToken();
-  console.log(payload);
   try {
     await apiClient.patch("items/", payload, {
       headers: {
@@ -85,6 +100,20 @@ export const editQuest = async (payload: editQuestPayload) => {
       },
     });
 
+    return payload;
+  } catch (e) {
+    console.log(e);
+  }
+};
+export const deleteQuest = async (payload:deleteQuestData) => {
+  const token = getLocalStorageToken();
+  try {
+    await apiClient.delete("items/", {
+      data: payload,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return payload;
   } catch (e) {
     console.log(e);

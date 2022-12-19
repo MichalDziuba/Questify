@@ -4,7 +4,7 @@ import {
   Action,
   getDefaultMiddleware,
 } from "@reduxjs/toolkit";
-import { appReducer } from "./userReducer";
+import { appReducer } from "./appReducer";
 
 export const store = configureStore({
   reducer: {
@@ -16,10 +16,6 @@ export const store = configureStore({
       serializableCheck: false,
     }),
 });
-
-
-
-
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

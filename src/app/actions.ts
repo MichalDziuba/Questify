@@ -4,7 +4,8 @@ import {
   logoutUser,
   addNewQuest,
   getAllQuests,
-  editQuest
+  editQuest,
+  deleteQuest,
 } from "./requests";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -21,4 +22,7 @@ export const actionGetAllQuests = createAsyncThunk(
 );
 export const actionEditQuest = createAsyncThunk("/items/editQuest",
   editQuest,
+)
+export const actionDeleteQuest = createAsyncThunk("/items/deleteQuest",
+deleteQuest
 )

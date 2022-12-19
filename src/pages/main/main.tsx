@@ -49,12 +49,12 @@ const MainPage: FC = () => {
   }, []);
 
   return (
-    <div className="">
+    <div className=" h-screen ">
       <Header />
       {isLoading ? (
         <Loader />
       ) : (
-        <section className="relative flex flex-col  items-center font-Montserrat bg-darkwhite">
+        <section className="relative flex flex-col  items-center font-Montserrat h-full bg-darkwhite bg-center bg-cover bg-none ">
           {items.length > 0 ? (
             <>
               {unfulfilledItems.length > 0 && (
