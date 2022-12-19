@@ -9,36 +9,35 @@ import {
   actionRegisterUser,
   actionLogoutUser,
   actionAddQuest,
+  actionGetAllQuests,
+  actionEditQuest
 } from "./actions";
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
+import { questType } from "../components/quest/quest";
 
-type questType = {
-  title: string;
-  category: string;
-  level: string;
-  date: string;
-  isDone: boolean;
-  isChallenge: boolean;
-};
-type AppState = {
-  userToken: null | string;
-  userName: null | string;
-  userEmail: null | string;
+
+
+
+export type AppState = {
+  userToken: string;
+  userName: string;
+  userEmail: string;
   items: questType[];
   isLoading: boolean;
   status: string;
 };
 
 const initialState: AppState = {
-  userToken: null || `${getLocalStorageToken()}`,
-  userName: null || `${getLocalStorageName()}`,
-  userEmail: null || `${getLocalStorageEmail()}`,
-  items: [],
+  userToken: getLocalStorageToken() || "" ,
+  userName: getLocalStorageName() || "" ,
+  userEmail: getLocalStorageEmail() || "" ,
+  items:[],
   isLoading: false,
   status: "idle",
 };
 
 export const appReducer = createReducer(initialState, (builder) => {
+
   builder
     .addCase(actionLoginUser.pending, (state) => {
       state.isLoading = true;
@@ -68,15 +67,17 @@ export const appReducer = createReducer(initialState, (builder) => {
     })
     .addCase(actionLogoutUser.rejected, (state) => {
       state.isLoading = false;
-      state.userEmail = null;
-      state.userName = null;
-      state.userToken = null;
+      state.userEmail = "";
+      state.userName = "";
+      state.userToken = "";
+      state.items = [];
     })
     .addCase(actionLogoutUser.fulfilled, (state) => {
       state.isLoading = false;
-      state.userEmail = null;
-      state.userName = null;
-      state.userToken = null;
+      state.userEmail = "";
+      state.userName = "";
+      state.userToken = "";
+      state.items = [];
     })
     .addCase(actionAddQuest.pending, (state) => {
       state.status = "pending";
@@ -87,7 +88,47 @@ export const appReducer = createReducer(initialState, (builder) => {
       state.isLoading = false;
     })
     .addCase(actionAddQuest.fulfilled, (state, action) => {
+      state.items.push(action.payload!)
       state.isLoading = false;
-      // state.items=[...state.items, action.payload]
-    });
+    })
+    .addCase(actionGetAllQuests.pending, (state) => {
+     state.status = "pending";
+    //  state.isLoading = true;
+  })
+    .addCase(actionGetAllQuests.rejected, (state) => {
+    
+      state.items = [];
+      state.userToken = "";
+       state.userEmail = "";
+      state.userName = "";
+      localStorage.clear()
+      // state.isLoading = false;
+      state.status="rejected"
+  })
+    .addCase(actionGetAllQuests.fulfilled, (state, action) => {
+      state.items = action.payload;
+      // state.isLoading = false;
+    })
+    .addCase(actionEditQuest.fulfilled, (state, action) => {
+      const payloadData = action.payload;
+     if (payloadData) {
+       const id = payloadData.id;
+       const questData = payloadData.data;
+
+      
+      const quest = state.items.find((item) => item._id === id);
+       if (quest) {
+            
+            const questIndex = state.items.indexOf(quest);
+            console.log(state.items[questIndex]);
+            console.log(questIndex);
+            state.items[questIndex] = {
+              ...state.items[questIndex],
+              ...questData,
+            };
+          }
+      
+
+     }
+  })
 });

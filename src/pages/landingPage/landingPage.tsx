@@ -3,7 +3,6 @@ import { FC, FormEvent, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { actionLoginUser, actionRegisterUser } from "../../app/actions";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-
 import Button from "../../components/buttons/landing/landingButton";
 import { Login } from "../../components/forms/loginForm/login";
 import Register from "../../components/forms/registerForm/register";
@@ -26,6 +25,7 @@ type entryForm = {
 };
 
 const LandingPage: FC = () => {
+  
   const landingForms: entryForm = {
     register: "register",
     login: "login",
@@ -77,11 +77,11 @@ const LandingPage: FC = () => {
 
 
   return (
-    <section className="h-full w-full flex background  mr-5 ml-5  ">
+    <section className="h-screen w-screen flex background justify-center ">
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="md:w-1/2">
+        <div className="ml-2 mr-2 md:w-1/2">
           <h1 className=" font-bold text-2xl text-azure mt-12">Questify</h1>
           <div className="font-Montserrat mt-8">
             <div className="  text-xl text-black text-center font-semibold">

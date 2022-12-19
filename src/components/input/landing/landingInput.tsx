@@ -1,13 +1,13 @@
 import { FC } from "react";
 
-export interface Props {
-    title: string,
-    name: string,
-    required?: boolean,
-    type:string,
+ type props= {
+    title: string;
+    name: string;
+    required?: boolean;
+    type:string;
 }
 
-const Input: FC<Props> = ({ title,name,required,type }) => {
+const Input: FC<props> = ({ title,name,required,type }) => {
     return (
         <input
             name={name}

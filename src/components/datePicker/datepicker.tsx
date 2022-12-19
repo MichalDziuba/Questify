@@ -1,14 +1,20 @@
-import React, { FC  } from "react"
+import React, { FC } from "react";
 import { Dayjs } from "dayjs";
 import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-type Props = {
-    dateValue: Dayjs|null;
-    setDateValue:React.Dispatch<React.SetStateAction<Dayjs|null>>
-}
-const Calendar:FC<Props>= ({ dateValue, setDateValue }:Props) => {
+type props = {
+  dateValue: Dayjs | null;
+  setDateValue: React.Dispatch<React.SetStateAction<Dayjs | null>>;
+  isQuestChallenge: boolean;
+};
+
+const Calendar: FC<props> = ({
+  dateValue,
+  setDateValue,
+  isQuestChallenge,
+}: props) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
@@ -16,12 +22,50 @@ const Calendar:FC<Props>= ({ dateValue, setDateValue }:Props) => {
         value={dateValue}
         onChange={(newValue) => {
           setDateValue(newValue);
-        
         }}
-        renderInput={(params) => <TextField datatype="DD/MM/YYYY" {...params}  />}
-        
+        renderInput={(params) => (
+          <TextField
+            sx={
+              isQuestChallenge
+                ? {
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "white",
+                      },
+                      "&:hover fieldset": {
+                        borderColor: "white",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "white",
+                      },
+                      color: "white",
+                    },
+                  }
+                : {
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "black",
+                      },
+                      "&:hover fieldset": {
+                        borderColor: "black",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "black",
+                      },
+                      color: "black",
+                    },
+                  }
+            }
+            InputLabelProps={{
+              style: {
+                color: isQuestChallenge ? "white" : "black",
+              },
+            }}
+            {...params}
+          />
+        )}
       />
     </LocalizationProvider>
   );
 };
-export default Calendar
+export default Calendar;

@@ -1,4 +1,3 @@
-import Notiflix from "notiflix";
 import { Dna } from "react-loader-spinner";
 import { FC } from "react";
 

@@ -8,7 +8,7 @@ const LandingPage = lazy(() => import("./pages/landingPage/landingPage"));
 const Loader = lazy(() => import("./components/loader/loader"));
 const App: FC = () => {
   return (
-    <div className="w-screen h-screen flex justify-center">
+    <div className="w-screen h-screen justify-center">
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/auth" element={<LandingPage />} />

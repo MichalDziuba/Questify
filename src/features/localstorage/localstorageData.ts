@@ -3,7 +3,7 @@ export const saveTokenToLocalStorage = (token:string) => {
    return localStorage.setItem("token", token);
 }
 export const getLocalStorageToken = () => {
-   return localStorage?.getItem("token")
+    return localStorage?.getItem("token") || "";
 }
 export const removeTokenFromLocalStorage = () => {
     return localStorage.removeItem("token")

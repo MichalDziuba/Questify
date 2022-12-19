@@ -1,11 +1,11 @@
 import { FC, FormEvent } from "react";
 import Input from "../../input/landing/landingInput";
 import { GoButton } from "../../buttons/landing/goButton";
-type Props = {
+type props = {
   fn: (e: FormEvent<HTMLFormElement>) => void;
 };
 
-const Register: FC<Props> = ({ fn }) => {
+const Register: FC<props> = ({ fn }) => {
   return (
     <form
       className="flex flex-col w-full justify-center items-center mt-6 min-h-[208px] relative"
