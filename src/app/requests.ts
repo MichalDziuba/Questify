@@ -1,4 +1,8 @@
-import { deleteQuestData, editQuestPayload } from "../components/forms/questForm/questForm";
+import { formData } from "../components/questForm/questForm";
+import {
+  deleteQuestData,
+  editQuestPayload,
+} from "../components/questForm/questForm";
 import { questType } from "./../components/quest/quest";
 import {
   addToLocalStorage,
@@ -49,7 +53,7 @@ export const logoutUser = async (payload: string) => {
     console.log(e);
   }
 };
-export const addNewQuest = async (payload: questType) => {
+export const addNewQuest = async (payload: formData) => {
   const token = getLocalStorageToken();
   try {
     const response = await apiClient.post("items/", payload, {
@@ -58,7 +62,6 @@ export const addNewQuest = async (payload: questType) => {
       },
     });
 
-    console.log(response)
     const { category, date, isChallenge, level, title, _id } =
       response.data.data;
     const quest: questType = {
@@ -83,9 +86,7 @@ export const getAllQuests = async (payload: string) => {
   });
 
   try {
-    console.log(`tutaj`)
     const data = await response.data.data;
-    console.log(data)
     return data;
   } catch (e) {
     console.log(e);
@@ -105,7 +106,7 @@ export const editQuest = async (payload: editQuestPayload) => {
     console.log(e);
   }
 };
-export const deleteQuest = async (payload:deleteQuestData) => {
+export const deleteQuest = async (payload: deleteQuestData) => {
   const token = getLocalStorageToken();
   try {
     await apiClient.delete("items/", {

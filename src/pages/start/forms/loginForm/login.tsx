@@ -1,6 +1,6 @@
 import { FC, FormEvent } from "react";
-import Input from "../../input/landing/landingInput";
-import { GoButton } from "../../buttons/landing/goButton";
+import Input from "../../../../components/input/landing/landingInput";
+import { GoButton } from "../../../../components/buttons/goButton/goButton";
 
 type props = {
   fn: (e: FormEvent<HTMLFormElement>) => void;

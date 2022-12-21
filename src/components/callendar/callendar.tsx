@@ -39,7 +39,10 @@ const Calendar: FC<props> = ({
                         borderColor: "white",
                       },
                       color: "white",
-                    },
+                  },
+                  svg: {
+                    color:"white"
+                  }
                   }
                 : {
                     "& .MuiOutlinedInput-root": {

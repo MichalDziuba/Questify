@@ -1,19 +1,26 @@
 import dayjs, { Dayjs } from "dayjs";
 import React, { FC, useState } from "react";
-import { AiFillStar, AiOutlineDelete } from "react-icons/ai";
-import Calendar from "../../datePicker/datepicker";
+import { AiFillStar, AiOutlineDelete, AiTwotoneTrophy } from "react-icons/ai";
+import Calendar from "../callendar/callendar";
 import { GoPrimitiveDot } from "react-icons/go";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { actionAddQuest, actionDeleteQuest, actionEditQuest } from "../../../app/actions";
-import { formatDate } from "../../../features/date/date";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import {
+  actionAddQuest,
+  actionDeleteQuest,
+  actionEditQuest,
+} from "../../app/actions";
+import { formatDate } from "../../features/date/date";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
+import { Backdrop } from "@mui/material";
+import { height } from "@mui/system";
 
 export type editQuestPayload = {
   id: string;
   owner: string;
-  data: editQuestData;
+  data: formData;
 };
-type editQuestData = {
+
+export type formData = {
   title: string;
   date: string;
   isChallenge: boolean;
@@ -32,9 +39,9 @@ type QuestFormProps = {
   id: string;
 };
 export type deleteQuestData = {
-  owner: string,
-  id:string
-}
+  owner: string;
+  id: string;
+};
 const QuestForm: FC<QuestFormProps> = ({
   closeModalFn,
   questCategory,
@@ -65,7 +72,7 @@ const QuestForm: FC<QuestFormProps> = ({
   const [dotColor, setDotColor] = useState(getDotColor(questLevel!));
   const userEmail = useAppSelector((state) => state.app.userEmail);
   const [isQuestChallenge, setQuestChallenge] = useState(isChallenge);
-
+  const [modalDeleteOpen, setModalOpen] = useState(false);
   const handleChallenge = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setQuestChallenge(!isQuestChallenge);
@@ -79,8 +86,7 @@ const QuestForm: FC<QuestFormProps> = ({
       difficult: { value: string };
       categories: { value: string };
     };
-    const dataQuest = {
-      _id: "",
+    const dataQuest: formData = {
       title: target.title.value,
       level: target.difficult.value,
       category: target.categories.value,
@@ -99,7 +105,7 @@ const QuestForm: FC<QuestFormProps> = ({
       difficult: { value: string };
       categories: { value: string };
     };
-    const data: editQuestData = {
+    const data: formData = {
       title: target.title.value,
       level: target.difficult.value,
       category: target.categories.value,
@@ -112,16 +118,17 @@ const QuestForm: FC<QuestFormProps> = ({
       data,
     };
     dispatch(actionEditQuest(dataPayload));
-    closeModalFn()
+    closeModalFn();
   };
   const handleDelete = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const payloadData:deleteQuestData = {
+    const payloadData: deleteQuestData = {
       owner: userEmail,
       id: id,
     };
-    dispatch(actionDeleteQuest(payloadData))
-  }
+    dispatch(actionDeleteQuest(payloadData));
+    setModalOpen(false);
+  };
   const handleChangeLevel = (
     e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
   ): void => {
@@ -155,7 +162,7 @@ const QuestForm: FC<QuestFormProps> = ({
 
   return (
     <div
-      className={`w-72 h-72 rounded-2xl  flex flex-col justify-around items-center font-Montserrat text-black ${
+      className={`w-72 h-72 rounded-2xl  flex flex-col justify-around items-center font-Montserrat relative  text-black ${
         isQuestChallenge ? "bg-deepblue " : "bg-white "
       }`}
     >
@@ -182,14 +189,30 @@ const QuestForm: FC<QuestFormProps> = ({
           <div className="flex w-4/12 justify-between font-medium mr-3">
             {!isQuestNew && (
               <>
-                <button type="button" onClick={handleDelete}>
-                  <AiOutlineDelete className={`w-5 h-5 ${isQuestChallenge? "text-white":"text-black"}`} />
+                <button
+                  type="button"
+                  onClick={() => setModalOpen(true)}
+                  className="  transition
+    duration-50
+    ease-in-out"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="right"
+                  title={`Delete ${isQuestChallenge ? "challenge" : "quest"}!`}
+                >
+                  <AiOutlineDelete
+                    className={`w-5 h-5 ${
+                      isQuestChallenge ? "text-white" : "text-black"
+                    }`}
+                  />
                 </button>{" "}
                 <span className="text-gray text-lg">|</span>
               </>
             )}
             <button
-              className="text-red-600"
+              className=" text-red-600 transition duration-50 ease-in-out"
+              data-bs-toggle="tooltip"
+              data-bs-placement="right"
+              title="Cancel"
               type="button"
               onClick={closeModalFn}
             >
@@ -198,9 +221,21 @@ const QuestForm: FC<QuestFormProps> = ({
             <span className="text-gray text-lg">|</span>
             <button className="text-azure" type="submit">
               {isQuestNew ? (
-                "START"
+                <p
+                  className=" duration-50 ease-in-out"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="right"
+                  title="Start the new quest!"
+                >
+                  START
+                </p>
               ) : (
-                <IoCheckmarkDoneSharp className="text-green-500 w-5 h-5" />
+                <IoCheckmarkDoneSharp
+                  className="text-green-500 w-5 h-5 duration-50 ease-in-out"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="right"
+                  title="Save"
+                />
               )}
             </button>
           </div>
@@ -217,7 +252,9 @@ const QuestForm: FC<QuestFormProps> = ({
           defaultValue={questTitle}
           maxLength={40}
           required
-          placeholder={isQuestChallenge?"Create a challange!":"Create a new quest"}
+          placeholder={
+            isQuestChallenge ? "Create a challange!" : "Create a new quest"
+          }
           className={`border-b-2 border-azure text-azure placeholder:text-gray placeholder:text-center placeholder:text-base outline-0 text-lg w-10/12 ${
             isQuestChallenge ? "bg-deepblue" : "bg-white"
           }`}
@@ -248,11 +285,62 @@ const QuestForm: FC<QuestFormProps> = ({
                 <option value="hard">Hard</option>
               </select>
             </div>
+
             <button onClick={handleChallenge}>
-              <AiFillStar className="fill-azure w-5 h-5" />
+              {isQuestChallenge ? (
+                <AiFillStar
+                  className="fill-azure w-5 h-5"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="right"
+                  title="Back to normal quest!"
+                />
+              ) : (
+                <AiTwotoneTrophy
+                  className="fill-azure w-5 h-5"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="right"
+                  title="Make your quest a challenge!"
+                />
+              )}
             </button>
           </div>
         </div>
+        {modalDeleteOpen && (
+          <Backdrop
+            sx={{
+              color: "#ffff",
+              justifyItems: "center",
+              alignItems: "center",
+              opacity: "1",
+              zIndex: (theme) => theme.zIndex.drawer + 1,
+            }}
+            open={modalDeleteOpen}
+          >
+            <div className="flex flex-col w-64 h-36 items-center justify-evenly border-solid border-2 bg-navyblue rounded duration-500 ease-in-out ">
+              <h2 className="text-center text-lg">{`Do you want to delete this ${
+                isQuestChallenge ? "challenge" : "quest"
+              }?`}</h2>
+              <ul className="flex justify-around w-9/12 text-lg">
+                <li>
+                  <button
+                    className="w-12 h-8 border-2 border-solid bg-green-500 text-center"
+                    onClick={handleDelete}
+                  >
+                    Yes
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className="w-12 h-8 border-2 border-solid bg-red-500"
+                    onClick={() => setModalOpen(false)}
+                  >
+                    No
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </Backdrop>
+        )}
       </form>
     </div>
   );

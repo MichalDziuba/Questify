@@ -3,9 +3,9 @@ import { FC, FormEvent, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { actionLoginUser, actionRegisterUser } from "../../app/actions";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import Button from "../../components/buttons/landing/landingButton";
-import { Login } from "../../components/forms/loginForm/login";
-import Register from "../../components/forms/registerForm/register";
+import Button from "../../components/buttons/startpagebutton/startPageButton";
+import { Login } from "./forms/loginForm/login";
+import Register from "./forms/registerForm/register";
 import Loader from "../../components/loader/loader";
 
 type registerData = {
@@ -24,8 +24,7 @@ type entryForm = {
   login: entryName;
 };
 
-const LandingPage: FC = () => {
-  
+const StartPage: FC = () => {
   const landingForms: entryForm = {
     register: "register",
     login: "login",
@@ -35,7 +34,7 @@ const LandingPage: FC = () => {
   const navigate = useNavigate();
   const token = useAppSelector((state) => state.app.userToken);
   const isLoading = useAppSelector((state) => state.app.isLoading);
- 
+
   const [activeForm, setActiveForm] = useState(landingForms.register);
   const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -74,7 +73,6 @@ const LandingPage: FC = () => {
       navigate("/");
     }
   }, [navigate, token]);
-
 
   return (
     <section className="h-screen w-screen flex background justify-center ">
@@ -119,4 +117,4 @@ const LandingPage: FC = () => {
     </section>
   );
 };
-export default LandingPage;
+export default StartPage;

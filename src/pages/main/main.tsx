@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from "react";
-import { AddButton } from "../../components/buttons/main/addButton/addButton";
+import { AddButton } from "../../components/buttons/addButton/addButton";
 import { Header } from "../../components/header/header";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Loader from "../../components/loader/loader";
 import EmptyState from "../../components/emptystate/emptyState";
 import Backdrop from "@mui/material/Backdrop";
-import QuestForm from "../../components/forms/questForm/questForm";
+import QuestForm from "../../components/questForm/questForm";
 import { actionGetAllQuests } from "../../app/actions";
 import { questType } from "../../components/quest/quest";
 import { today, tomorrow } from "../../features/date/date";
@@ -49,16 +49,16 @@ const MainPage: FC = () => {
   }, []);
 
   return (
-    <div className=" h-screen ">
+    <div className=" min-h-screen max-h-fit bg-darkwhite ">
       <Header />
       {isLoading ? (
         <Loader />
       ) : (
-        <section className="relative flex flex-col  items-center font-Montserrat h-full bg-darkwhite bg-center bg-cover bg-none ">
+        <section className="relative flex flex-col  items-center font-Montserrat ">
           {items.length > 0 ? (
             <>
               {unfulfilledItems.length > 0 && (
-                <QuestList items={unfulfilledItems} title={"Time's' up:"} />
+                <QuestList items={unfulfilledItems} title={"Time's up:"} />
               )}
               {todayItems.length > 0 && (
                 <QuestList items={todayItems} title={"Today:"} />

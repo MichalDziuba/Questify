@@ -13,7 +13,7 @@ import {
   actionEditQuest,
   actionDeleteQuest,
 } from "./actions";
-import { createReducer, PayloadAction } from "@reduxjs/toolkit";
+import { createReducer } from "@reduxjs/toolkit";
 import { questType } from "../components/quest/quest";
 
 export type AppState = {
@@ -37,9 +37,11 @@ const initialState: AppState = {
 export const appReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(actionLoginUser.pending, (state) => {
+      state.status = "pending";
       state.isLoading = true;
     })
     .addCase(actionLoginUser.rejected, (state) => {
+      state.status = "rejected";
       state.isLoading = false;
     })
     .addCase(actionLoginUser.fulfilled, (state, action) => {
@@ -57,9 +59,11 @@ export const appReducer = createReducer(initialState, (builder) => {
       state.isLoading = false;
     })
     .addCase(actionRegisterUser.fulfilled, (state) => {
+      state.status = "idle";
       state.isLoading = false;
     })
     .addCase(actionLogoutUser.pending, (state) => {
+      state.status = "pending";
       state.isLoading = true;
     })
     .addCase(actionLogoutUser.rejected, (state) => {
@@ -70,6 +74,7 @@ export const appReducer = createReducer(initialState, (builder) => {
       state.items = [];
     })
     .addCase(actionLogoutUser.fulfilled, (state) => {
+      state.status = "pending";
       state.isLoading = false;
       state.userEmail = "";
       state.userName = "";
@@ -87,10 +92,11 @@ export const appReducer = createReducer(initialState, (builder) => {
     .addCase(actionAddQuest.fulfilled, (state, action) => {
       state.items.push(action.payload!);
       state.isLoading = false;
+      state.status = "pending";
     })
     .addCase(actionGetAllQuests.pending, (state) => {
       state.status = "pending";
-      //  state.isLoading = true;
+       state.isLoading = true;
     })
     .addCase(actionGetAllQuests.rejected, (state) => {
       state.items = [];
@@ -98,12 +104,13 @@ export const appReducer = createReducer(initialState, (builder) => {
       state.userEmail = "";
       state.userName = "";
       localStorage.clear();
-      // state.isLoading = false;
+      state.isLoading = false;
       state.status = "rejected";
     })
     .addCase(actionGetAllQuests.fulfilled, (state, action) => {
+      state.status = "pending";
       state.items = action.payload;
-      // state.isLoading = false;
+      state.isLoading = false;
     })
     .addCase(actionEditQuest.fulfilled, (state, action) => {
       const payloadData = action.payload;
@@ -114,7 +121,7 @@ export const appReducer = createReducer(initialState, (builder) => {
         const quest = state.items.find((item) => item._id === questId);
         if (quest) {
           const questIndex = state.items.indexOf(quest);
-          console.log(state.items[questIndex]);
+          state.status = "pending";
           state.items[questIndex] = {
             ...state.items[questIndex],
             ...questData,
@@ -123,10 +130,10 @@ export const appReducer = createReducer(initialState, (builder) => {
       }
     })
     .addCase(actionDeleteQuest.pending, (state) => {
-      console.log("pending");
+     state.status = "pending";
     })
     .addCase(actionDeleteQuest.rejected, (state) => {
-      console.log("rejected");
+      state.status = "rejected";
     })
     .addCase(actionDeleteQuest.fulfilled, (state, action) => {
       const payloadData = action.payload;
@@ -136,6 +143,7 @@ export const appReducer = createReducer(initialState, (builder) => {
           (item) => item._id !== questId
         );
         state.items = newItemsArray;
+        state.status = "pending";
       }
     });
 });
