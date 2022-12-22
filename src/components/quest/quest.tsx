@@ -8,7 +8,9 @@ import { QuestCategory } from "./questCategory";
 import { QuestTitle } from "./questTitle";
 import { QuestDate } from "./questDate";
 import { GiTrophyCup } from "react-icons/gi";
-
+import { formData, editQuestPayload } from "../questForm/questForm";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { actionEditQuest } from "../../app/actions";
 export type questType = {
   _id: string;
   title: string;
@@ -16,6 +18,7 @@ export type questType = {
   level: string;
   date: string;
   isChallenge: boolean;
+  isDone: boolean;
 };
 
 const Quest: FC<questType> = ({
@@ -25,6 +28,7 @@ const Quest: FC<questType> = ({
   category,
   _id,
   isChallenge,
+  isDone,
 }: questType) => {
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -32,14 +36,15 @@ const Quest: FC<questType> = ({
   };
 
   const handleEdit = async (e: React.SyntheticEvent) => {
-    console.log(level, title, date, category, _id, isChallenge);
     setOpen(!open);
   };
+  const abc = new Date("2022/12/22");
+  console.log(abc)
 
   return (
-    <>
+    <div>
       <div
-        className={`shadow-[3px_4px_4px_4px_rgba(21,57,90,0.03),-3px_-4px_4px_0px_rgba(21,57,90,0.03)] w-72 h-64 flex flex-col justify-around rounded-2xl font-Montserrat ${
+        className={`relative shadow-[3px_4px_4px_4px_rgba(21,57,90,0.03),-3px_-4px_4px_0px_rgba(21,57,90,0.03)] w-72 h-64 flex flex-col justify-around rounded-2xl font-Montserrat ${
           isChallenge ? "bg-deepblue " : "bg-white "
         }`}
         id={_id}
@@ -62,7 +67,9 @@ const Quest: FC<questType> = ({
           <QuestTitle text={title} isChallenge={isChallenge} />
           <QuestDate date={date} />
         </div>
+
         <QuestCategory category={category} />
+       
       </div>
       {open && (
         <Backdrop
@@ -79,10 +86,11 @@ const Quest: FC<questType> = ({
             questDate={date}
             isChallenge={isChallenge}
             id={_id}
+            isDone={isDone}
           />
         </Backdrop>
       )}
-    </>
+    </div>
   );
 };
 export default Quest;

@@ -84,6 +84,7 @@ const MainPage: FC = () => {
               id=""
               isQuestNew={true}
               isChallenge={false}
+              isDone={false}
             />
           </Backdrop>
         </section>

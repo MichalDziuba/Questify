@@ -20,6 +20,7 @@ const Calendar: FC<props> = ({
       <DatePicker
         label="Select a date"
         value={dateValue}
+        inputFormat="DD/MM/YYYY"
         onChange={(newValue) => {
           setDateValue(newValue);
         }}
@@ -39,10 +40,10 @@ const Calendar: FC<props> = ({
                         borderColor: "white",
                       },
                       color: "white",
-                  },
-                  svg: {
-                    color:"white"
-                  }
+                    },
+                    svg: {
+                      color: "white",
+                    },
                   }
                 : {
                     "& .MuiOutlinedInput-root": {

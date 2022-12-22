@@ -12,7 +12,6 @@ import {
 import { formatDate } from "../../features/date/date";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import { Backdrop } from "@mui/material";
-import { height } from "@mui/system";
 
 export type editQuestPayload = {
   id: string;
@@ -26,6 +25,7 @@ export type formData = {
   isChallenge: boolean;
   level: string;
   category: string;
+  isDone: boolean;
 };
 
 type QuestFormProps = {
@@ -37,6 +37,7 @@ type QuestFormProps = {
   isQuestNew: boolean;
   isChallenge: boolean;
   id: string;
+  isDone: boolean;
 };
 export type deleteQuestData = {
   owner: string;
@@ -51,6 +52,7 @@ const QuestForm: FC<QuestFormProps> = ({
   questDate = "",
   isChallenge,
   id,
+  isDone,
 }) => {
   const getDotColor = (level: string) => {
     switch (level) {
@@ -65,13 +67,13 @@ const QuestForm: FC<QuestFormProps> = ({
         return "green";
     }
   };
-
   const dispatch = useAppDispatch();
   const date = isQuestNew ? dayjs(new Date()) : dayjs(formatDate(questDate));
   const [dateCalendar, setDateCalendar] = useState<Dayjs | null>(dayjs(date));
   const [dotColor, setDotColor] = useState(getDotColor(questLevel!));
   const userEmail = useAppSelector((state) => state.app.userEmail);
   const [isQuestChallenge, setQuestChallenge] = useState(isChallenge);
+  const [isQuestDone, setQuestDone] = useState(isDone);
   const [modalDeleteOpen, setModalOpen] = useState(false);
   const handleChallenge = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -92,8 +94,8 @@ const QuestForm: FC<QuestFormProps> = ({
       category: target.categories.value,
       date: `${dateCalendar?.format("DD/MM/YYYY")}`,
       isChallenge: isQuestChallenge,
+      isDone: isQuestDone,
     };
-
     await dispatch(actionAddQuest(dataQuest));
     form.reset();
     closeModalFn();
@@ -111,6 +113,7 @@ const QuestForm: FC<QuestFormProps> = ({
       category: target.categories.value,
       date: `${dateCalendar?.format("DD/MM/YYYY")}`,
       isChallenge: isQuestChallenge,
+      isDone: isQuestDone,
     };
     const dataPayload: editQuestPayload = {
       owner: userEmail,
@@ -159,7 +162,24 @@ const QuestForm: FC<QuestFormProps> = ({
       selectForm.style.background = "#D3F6CE";
     }
   };
-
+  const completeQuest = async (e: React.SyntheticEvent) => {
+    // console.log(questTitle,questLevel,questCategory,questDate,isChallenge,isDone)
+    e.preventDefault()
+    const data: formData = {
+      title: questTitle!,
+      level: questLevel!,
+      category: questCategory!,
+      date: questDate,
+      isChallenge: isChallenge,
+      isDone: true,
+    };
+    const dataPayload: editQuestPayload = {
+      owner: userEmail,
+      id: id,
+      data,
+    };
+    dispatch(actionEditQuest(dataPayload));
+  };
   return (
     <div
       className={`w-72 h-72 rounded-2xl  flex flex-col justify-around items-center font-Montserrat relative  text-black ${
@@ -171,7 +191,15 @@ const QuestForm: FC<QuestFormProps> = ({
         className="w-full h-[80%] flex flex-col-reverse items-center justify-between"
         onSubmit={isQuestNew ? handleSubmit : handleEdit}
       >
-        <div className="flex justify-between w-full flex-row">
+        {!isQuestNew && (
+          <button
+            className={`absolute bottom-0 bg-azure text-white rounded-t-xl w-24 font-medium `}
+            onClick={completeQuest}
+          >
+            DONE!
+          </button>
+        )}
+        <div className="flex justify-between w-full flex-row mb-4">
           <select
             name="categories"
             onChange={handleChangeCategories}
@@ -315,8 +343,9 @@ const QuestForm: FC<QuestFormProps> = ({
               zIndex: (theme) => theme.zIndex.drawer + 1,
             }}
             open={modalDeleteOpen}
+            className="open:animate-fade-in"
           >
-            <div className="flex flex-col w-64 h-36 items-center justify-evenly border-solid border-2 bg-navyblue rounded duration-500 ease-in-out ">
+            <div className=" flex flex-col w-64 h-36 items-center justify-evenly border-solid border-2 bg-navyblue rounded duration-500 ease-in-out ">
               <h2 className="text-center text-lg">{`Do you want to delete this ${
                 isQuestChallenge ? "challenge" : "quest"
               }?`}</h2>
