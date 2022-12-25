@@ -1,11 +1,10 @@
 import { FC, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import { PrivateRoute } from "./features/privateRoute/privateRoute";
-import { useAppSelector } from "./app/hooks";
 
 const MainPage = lazy(() => import("./pages/main/main"));
 const StartPage = lazy(() => import("./pages/start/startPage"));
-const Loader = lazy(() => import("./components/loader/loader"));
+const Loader = lazy(() => import("./components/loading/loader"));
 const App: FC = () => {
   return (
     <div className="w-screen h-screen justify-center">

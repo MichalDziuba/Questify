@@ -1,8 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import React, { FC, useState } from "react";
-import { AiFillStar, AiOutlineDelete, AiTwotoneTrophy } from "react-icons/ai";
 import Calendar from "../callendar/callendar";
-import { GoPrimitiveDot } from "react-icons/go";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   actionAddQuest,
@@ -10,8 +8,18 @@ import {
   actionEditQuest,
 } from "../../app/actions";
 import { formatDate } from "../../features/date/date";
-import { IoCheckmarkDoneSharp } from "react-icons/io5";
-import { Backdrop } from "@mui/material";
+import { DeleteModal } from "./deleteModal";
+import { QuestDifficult } from "./questDifficult";
+import { QuestCategory } from "./questCategory";
+import { ChallengeQuestButton } from "../buttons/challenge-questButton";
+import { QuestTitleInput } from "./questTitle";
+import { DotLevel } from './questDotLevel';
+
+import { SeparatorLine } from "./separatorLine";
+import { ButtonCancel } from "../buttons/cancelButton";
+import { ButtonDelete } from "../buttons/deleteButton";
+import { ButtonDone } from '../buttons/doneButton'
+import { ButtonStartSave } from "../buttons/start-saveButton";
 
 export type editQuestPayload = {
   id: string;
@@ -30,10 +38,10 @@ export type formData = {
 
 type QuestFormProps = {
   closeModalFn: () => void;
-  questLevel?: string;
-  questCategory?: string;
-  questTitle?: string;
-  questDate?: string;
+  questLevel: string;
+  questCategory: string;
+  questTitle: string;
+  questDate: string;
   isQuestNew: boolean;
   isChallenge: boolean;
   id: string;
@@ -70,12 +78,12 @@ const QuestForm: FC<QuestFormProps> = ({
   const dispatch = useAppDispatch();
   const date = isQuestNew ? dayjs(new Date()) : dayjs(formatDate(questDate));
   const [dateCalendar, setDateCalendar] = useState<Dayjs | null>(dayjs(date));
-  const [dotColor, setDotColor] = useState(getDotColor(questLevel!));
+  const [dotColor, setDotColor] = useState(getDotColor(questLevel));
   const userEmail = useAppSelector((state) => state.app.userEmail);
   const [isQuestChallenge, setQuestChallenge] = useState(isChallenge);
-  const [isQuestDone, setQuestDone] = useState(isDone);
   const [modalDeleteOpen, setModalOpen] = useState(false);
-  const handleChallenge = async (e: React.SyntheticEvent) => {
+
+  const handleChallenge = (e: React.SyntheticEvent) => {
     e.preventDefault();
     setQuestChallenge(!isQuestChallenge);
   };
@@ -94,7 +102,7 @@ const QuestForm: FC<QuestFormProps> = ({
       category: target.categories.value,
       date: `${dateCalendar?.format("DD/MM/YYYY")}`,
       isChallenge: isQuestChallenge,
-      isDone: isQuestDone,
+      isDone: isDone,
     };
     await dispatch(actionAddQuest(dataQuest));
     form.reset();
@@ -113,7 +121,7 @@ const QuestForm: FC<QuestFormProps> = ({
       category: target.categories.value,
       date: `${dateCalendar?.format("DD/MM/YYYY")}`,
       isChallenge: isQuestChallenge,
-      isDone: isQuestDone,
+      isDone: isDone,
     };
     const dataPayload: editQuestPayload = {
       owner: userEmail,
@@ -123,8 +131,7 @@ const QuestForm: FC<QuestFormProps> = ({
     dispatch(actionEditQuest(dataPayload));
     closeModalFn();
   };
-  const handleDelete = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
+  const handleDelete: () => void = () => {
     const payloadData: deleteQuestData = {
       owner: userEmail,
       id: id,
@@ -163,12 +170,11 @@ const QuestForm: FC<QuestFormProps> = ({
     }
   };
   const completeQuest = async (e: React.SyntheticEvent) => {
-    // console.log(questTitle,questLevel,questCategory,questDate,isChallenge,isDone)
-    e.preventDefault()
+    e.preventDefault();
     const data: formData = {
-      title: questTitle!,
-      level: questLevel!,
-      category: questCategory!,
+      title: questTitle,
+      level: questLevel,
+      category: questCategory,
       date: questDate,
       isChallenge: isChallenge,
       isDone: true,
@@ -182,90 +188,34 @@ const QuestForm: FC<QuestFormProps> = ({
   };
   return (
     <div
-      className={`w-72 h-72 rounded-2xl  flex flex-col justify-around items-center font-Montserrat relative  text-black ${
-        isQuestChallenge ? "bg-deepblue " : "bg-white "
-      }`}
+      className={`w-72 h-72 rounded-2xl  flex flex-col justify-around items-center font-Montserrat relative  text-black ${isQuestChallenge ? "bg-deepblue " : "bg-white "
+        }`}
     >
       <form
         id="questForm"
         className="w-full h-[80%] flex flex-col-reverse items-center justify-between"
         onSubmit={isQuestNew ? handleSubmit : handleEdit}
       >
-        {!isQuestNew && (
-          <button
-            className={`absolute bottom-0 bg-azure text-white rounded-t-xl w-24 font-medium `}
-            onClick={completeQuest}
-          >
-            DONE!
-          </button>
-        )}
+        {!isQuestNew && <ButtonDone completeQuest={completeQuest} />}
         <div className="flex justify-between w-full flex-row mb-4">
-          <select
-            name="categories"
-            onChange={handleChangeCategories}
-            className="bg-[#B9C3C8] p-1 rounded-r-xl"
-            defaultValue={questCategory}
-          >
-            <option value="stuff">STUFF</option>
-            <option value="family">FAMILY</option>
-            <option value="health">HEALTH</option>
-            <option value="learning">LEARNING</option>
-            <option value="leisure">LEISURE</option>
-            <option value="work">WORK</option>
-          </select>
+          <QuestCategory
+            handleChangeCategories={handleChangeCategories}
+            questCategory={questCategory}
+          />
 
           <div className="flex w-4/12 justify-between font-medium mr-3">
             {!isQuestNew && (
               <>
-                <button
-                  type="button"
-                  onClick={() => setModalOpen(true)}
-                  className="  transition
-    duration-50
-    ease-in-out"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="right"
-                  title={`Delete ${isQuestChallenge ? "challenge" : "quest"}!`}
-                >
-                  <AiOutlineDelete
-                    className={`w-5 h-5 ${
-                      isQuestChallenge ? "text-white" : "text-black"
-                    }`}
-                  />
-                </button>{" "}
-                <span className="text-gray text-lg">|</span>
+                <ButtonDelete
+                  isQuestChallenge={isQuestChallenge}
+                  setModalOpen={setModalOpen}
+                />
+                <SeparatorLine />
               </>
             )}
-            <button
-              className=" text-red-600 transition duration-50 ease-in-out"
-              data-bs-toggle="tooltip"
-              data-bs-placement="right"
-              title="Cancel"
-              type="button"
-              onClick={closeModalFn}
-            >
-              X
-            </button>
-            <span className="text-gray text-lg">|</span>
-            <button className="text-azure" type="submit">
-              {isQuestNew ? (
-                <p
-                  className=" duration-50 ease-in-out"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="right"
-                  title="Start the new quest!"
-                >
-                  START
-                </p>
-              ) : (
-                <IoCheckmarkDoneSharp
-                  className="text-green-500 w-5 h-5 duration-50 ease-in-out"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="right"
-                  title="Save"
-                />
-              )}
-            </button>
+            <ButtonCancel closeModalFn={closeModalFn} />
+            <SeparatorLine />
+            <ButtonStartSave isQuestNew={isQuestNew} />
           </div>
         </div>
 
@@ -274,101 +224,35 @@ const QuestForm: FC<QuestFormProps> = ({
           setDateValue={setDateCalendar}
           isQuestChallenge={isQuestChallenge}
         />
-
-        <input
-          name="title"
-          defaultValue={questTitle}
-          maxLength={40}
-          required
-          placeholder={
-            isQuestChallenge ? "Create a challange!" : "Create a new quest"
-          }
-          className={`border-b-2 border-azure text-azure placeholder:text-gray placeholder:text-center placeholder:text-base outline-0 text-lg w-10/12 ${
-            isQuestChallenge ? "bg-deepblue" : "bg-white"
-          }`}
+        <QuestTitleInput
+          isQuestChallenge={isQuestChallenge}
+          questTitle={questTitle}
         />
+
         <div className="flex w-full">
           <div className="flex w-full justify-around">
             <div className="flex w-9/12">
-              <span>
-                <GoPrimitiveDot
-                  fill={dotColor}
-                  className="w-5 h-5"
-                  id="dot_color"
-                />
-              </span>
-              <select
-                id="difficult"
-                name="difficult"
-                onChange={handleChangeLevel}
-                defaultValue={questLevel}
-                className={
-                  isQuestChallenge
-                    ? "bg-deepblue text-white"
-                    : "bg-white text-black"
-                }
-              >
-                <option value="easy"> Easy</option>
-                <option value="normal"> Normal</option>
-                <option value="hard">Hard</option>
-              </select>
+              <DotLevel dotColor={dotColor} />
+              <QuestDifficult
+                handleChangeLevel={handleChangeLevel}
+                isQuestChallenge={isQuestChallenge}
+                questLevel={questLevel}
+              />
             </div>
 
-            <button onClick={handleChallenge}>
-              {isQuestChallenge ? (
-                <AiFillStar
-                  className="fill-azure w-5 h-5"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="right"
-                  title="Back to normal quest!"
-                />
-              ) : (
-                <AiTwotoneTrophy
-                  className="fill-azure w-5 h-5"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="right"
-                  title="Make your quest a challenge!"
-                />
-              )}
-            </button>
+            <ChallengeQuestButton
+              handleChallenge={handleChallenge}
+              isQuestChallenge={isQuestChallenge}
+            />
           </div>
         </div>
         {modalDeleteOpen && (
-          <Backdrop
-            sx={{
-              color: "#ffff",
-              justifyItems: "center",
-              alignItems: "center",
-              opacity: "1",
-              zIndex: (theme) => theme.zIndex.drawer + 1,
-            }}
-            open={modalDeleteOpen}
-            className="open:animate-fade-in"
-          >
-            <div className=" flex flex-col w-64 h-36 items-center justify-evenly border-solid border-2 bg-navyblue rounded duration-500 ease-in-out ">
-              <h2 className="text-center text-lg">{`Do you want to delete this ${
-                isQuestChallenge ? "challenge" : "quest"
-              }?`}</h2>
-              <ul className="flex justify-around w-9/12 text-lg">
-                <li>
-                  <button
-                    className="w-12 h-8 border-2 border-solid bg-green-500 text-center"
-                    onClick={handleDelete}
-                  >
-                    Yes
-                  </button>
-                </li>
-                <li>
-                  <button
-                    className="w-12 h-8 border-2 border-solid bg-red-500"
-                    onClick={() => setModalOpen(false)}
-                  >
-                    No
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </Backdrop>
+          <DeleteModal
+            modalDeleteOpen={modalDeleteOpen}
+            isQuestChallenge={isQuestChallenge}
+            handleDelete={handleDelete}
+            setModalOpen={setModalOpen}
+          />
         )}
       </form>
     </div>

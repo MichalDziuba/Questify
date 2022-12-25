@@ -3,10 +3,10 @@ import { FC, FormEvent, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { actionLoginUser, actionRegisterUser } from "../../app/actions";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import Button from "../../components/buttons/startpagebutton/startPageButton";
+import Button from "../../components/buttons/startPageButton";
 import { Login } from "./forms/loginForm/login";
 import Register from "./forms/registerForm/register";
-import Loader from "../../components/loader/loader";
+import Loader from "../../components/loading/loader";
 
 type registerData = {
   name: string;

@@ -1,14 +1,19 @@
 import { FC, useEffect, useState } from "react";
-import { AddButton } from "../../components/buttons/addButton/addButton";
+import { AddButton } from "../../components/buttons/addButton";
 import { Header } from "../../components/header/header";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import Loader from "../../components/loader/loader";
+import Loader from "../../components/loading/loader";
 import EmptyState from "../../components/emptystate/emptyState";
 import Backdrop from "@mui/material/Backdrop";
-import QuestForm from "../../components/questForm/questForm";
+import QuestForm from "../../components/questform/questForm";
 import { actionGetAllQuests } from "../../app/actions";
 import { questType } from "../../components/quest/quest";
-import { today, tomorrow } from "../../features/date/date";
+import {
+  parseDate,
+  parsedToday,
+  parsedTomorrow,
+
+} from "../../features/date/date";
 import { QuestList } from "../../components/questlist/questList";
 
 const MainPage: FC = () => {
@@ -29,32 +34,44 @@ const MainPage: FC = () => {
   let nextDaysItems: questType[] = [];
   let unfulfilledItems: questType[] = [];
 
-  const filteringItems = items.map((item) => {
-    if (item.date === today) {
+  items.forEach((item) => {
+    const itemDate = parseDate(item.date);
+    const today = parsedToday;
+    const tomorrow = parsedTomorrow;
+    if (itemDate.getTime() === today.getTime()) {
       todayItems.push(item);
-    }
-    if (item.date === tomorrow) {
+    } else if (itemDate.getTime() === tomorrow.getTime()) {
       tomorrowItems.push(item);
-    }
-    if (item.date < today) {
+    } else if (itemDate.getTime() > tomorrow.getTime()) {
+      nextDaysItems.push(item);
+    } else if (itemDate.getTime() < today.getTime()) {
       unfulfilledItems.push(item);
     }
-    if (item.date > tomorrow) {
-      nextDaysItems.push(item);
-    }
+  });
+
+  nextDaysItems.sort((a, b) => {
+    const aDate = parseDate(a.date);
+    const bDate = parseDate(b.date);
+    return aDate.getTime() - bDate.getTime();
+  });
+
+  unfulfilledItems.sort((a, b) => {
+    const aDate = parseDate(a.date);
+    const bDate = parseDate(b.date);
+    return aDate.getTime() - bDate.getTime();
   });
 
   useEffect(() => {
     dispatch(actionGetAllQuests(token));
-  }, []);
+  }, [dispatch, token]);
 
   return (
-    <div className=" min-h-screen max-h-fit bg-darkwhite ">
+    <div className=" min-h-screen h-fit bg-darkwhite pb-8">
       <Header />
       {isLoading ? (
         <Loader />
       ) : (
-        <section className="relative flex flex-col  items-center font-Montserrat ">
+        <section className="relative flex flex-col flex-wrap  items-center font-Montserrat max-w-screen min-w-screen ">
           {items.length > 0 ? (
             <>
               {unfulfilledItems.length > 0 && (
@@ -80,6 +97,10 @@ const MainPage: FC = () => {
             open={open}
           >
             <QuestForm
+              questCategory="stuff"
+              questDate=""
+              questLevel="easy"
+              questTitle=""
               closeModalFn={handleClose}
               id=""
               isQuestNew={true}

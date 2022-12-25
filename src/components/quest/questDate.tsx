@@ -1,4 +1,4 @@
-import { today, tomorrow } from "../../features/date/date";
+import { parseDate, parsedToday, parsedTomorrow } from "../../features/date/date";
 import { MdOutlineLocalFireDepartment } from "react-icons/md";
 import { AiOutlineFieldTime } from 'react-icons/ai';
 import { GiSnail } from "react-icons/gi";
@@ -8,41 +8,30 @@ type props = {
 };
 export const QuestDate = ({ date }: props) => {
   let text;
-
-  if (date === today) {
-    text = (
-      <p className="flex items-center justify-center">
-        Today
-        <MdOutlineLocalFireDepartment
-          fill="#FF851C"
-          size={20}
-          className="ml-1"
-        />
-      </p>
+  let icon;
+  const parsedDate = parseDate(date)
+  
+  if (parsedDate.getTime() === parsedToday.getTime()) {
+    icon = (
+      <MdOutlineLocalFireDepartment fill="#FF851C" size={20} className="ml-1" />
     );
+    text = "Today";
   }
-    if (date === tomorrow) {
-     text = (
-       <p className="flex items-center justify-center">
-         Tomorrow
-         <AiOutlineFieldTime fill="#FF851C" size={20} className="ml-1" />
-       </p>
-     );
+    if (parsedDate.getTime() === parsedTomorrow.getTime()) {
+
+      icon = <AiOutlineFieldTime fill="#FF851C" size={20} className="ml-1" />;
+      text="Tomorrow"
   } 
-  if (date > tomorrow) {
-     text = (
-       <p className="flex items-center justify-center">
-         {date} <GiSnail fill="#FF851C" size={20} className="ml-1" />
-       </p>
-     );
+  if (parsedDate.getTime() > parsedTomorrow.getTime()) {
+
+    icon = <GiSnail fill="#FF851C" size={20} className="ml-1" />;
+    text=date
   }
-  if (date < today) {
-   
-     text = (
-       <p className="flex items-center justify-center">
-         {date} <FaRegSadTear fill="#FF851C" size={20} className="ml-1" />
-       </p>
-     );
+  if (parsedDate.getTime() < parsedToday.getTime()) {
+
+    icon = <FaRegSadTear fill="#FF851C" size={20} className="ml-1" />;
+    text=date
   }
-  return <div className="text-base text-gray">{text}</div>;
+  return <div className="text-base text-gray"> <p className="flex items-center justify-center">
+    {text} {icon}</p></div>;
 };

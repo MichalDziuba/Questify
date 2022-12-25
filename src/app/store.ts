@@ -2,7 +2,6 @@ import {
   configureStore,
   ThunkAction,
   Action,
-  getDefaultMiddleware,
 } from "@reduxjs/toolkit";
 import { appReducer } from "./appReducer";
 

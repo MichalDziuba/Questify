@@ -30,6 +30,16 @@ module.exports = {
       animation: {
         "fade-in": "fade-in 1s ease-in-out",
       },
+      width: {
+        "questMobile": '18.125rem',
+        "questDefault": "12.81rem",
+        "titleMobile": "16.5rem",
+        "titleDefault":"11.2rem"
+      },
+      height: {
+        "questMobile": "16.25rem",
+        "questDefault": "12.5rem",
+      }
     },
   },
   plugins: [],

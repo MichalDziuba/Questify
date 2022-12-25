@@ -2,7 +2,7 @@ import { getLocalStorageToken } from './../features/localstorage/localstorageDat
 import axios from "axios";
 
 export const apiClient = axios.create({
-  baseURL: "http://localhost:8080/",
+  baseURL: "https://questify.onrender.com/",
   // baseURL: "https://questify.herokuapp.com/",
 });
 const token = getLocalStorageToken();

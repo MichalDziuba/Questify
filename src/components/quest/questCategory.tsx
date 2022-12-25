@@ -27,7 +27,7 @@ export const QuestCategory = ({ category }: Props) => {
 
     return (
         <div className={`${backgroundStyle} w-32 rounded-r-xl flex items-center justify-center p-[1px]`}>
-            <p className="text-lg font-Montserrat">
+            <p className="text-lg font-Montserrat md:text-base">
               {category.toUpperCase()}  
             </p>
 

@@ -7,7 +7,7 @@ type props = {
 export const QuestTitle = ({ text,isChallenge }: props) => {
     return (
       <p
-        className={`text-xl text-center break-all w-64 ${
+        className={`text-xl text-center break-all w-titleMobile md:w-titleDefault md:text-lg ${
           isChallenge ? "text-white" : "text-black"
         }`}
       >
