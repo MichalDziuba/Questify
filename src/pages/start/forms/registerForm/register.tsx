@@ -13,7 +13,7 @@ const Register: FC<props> = ({ fn }) => {
     >
       <Input title="Name" name="userName" required={true} type="text" />
       <Input title="Email" name="email" required={true} type="email" />
-      <Input title="Password" name="password" required={true} type="password" />
+      <Input title="Password" name="password" required={true} type="password"/>
       <Input
         title="Confirm password"
         name="passwordRepeat"

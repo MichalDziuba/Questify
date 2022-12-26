@@ -92,11 +92,10 @@ export const appReducer = createReducer(initialState, (builder) => {
     .addCase(actionAddQuest.fulfilled, (state, action) => {
       state.items.push(action.payload!);
       state.isLoading = false;
-      state.status = "pending";
     })
     .addCase(actionGetAllQuests.pending, (state) => {
       state.status = "pending";
-       state.isLoading = true;
+      state.isLoading = true;
     })
     .addCase(actionGetAllQuests.rejected, (state) => {
       state.items = [];
@@ -108,8 +107,14 @@ export const appReducer = createReducer(initialState, (builder) => {
       state.status = "rejected";
     })
     .addCase(actionGetAllQuests.fulfilled, (state, action) => {
-      state.status = "pending";
+      state.status = "fulfilled";
       state.items = action.payload;
+      state.isLoading = false;
+    })
+    .addCase(actionEditQuest.pending, (state) => {
+      state.isLoading = true;
+    })
+    .addCase(actionEditQuest.rejected, (state) => {
       state.isLoading = false;
     })
     .addCase(actionEditQuest.fulfilled, (state, action) => {
@@ -121,6 +126,7 @@ export const appReducer = createReducer(initialState, (builder) => {
         const quest = state.items.find((item) => item._id === questId);
         if (quest) {
           const questIndex = state.items.indexOf(quest);
+          state.isLoading = false;
           state.status = "pending";
           state.items[questIndex] = {
             ...state.items[questIndex],
@@ -130,7 +136,7 @@ export const appReducer = createReducer(initialState, (builder) => {
       }
     })
     .addCase(actionDeleteQuest.pending, (state) => {
-     state.status = "pending";
+      state.status = "pending";
     })
     .addCase(actionDeleteQuest.rejected, (state) => {
       state.status = "rejected";

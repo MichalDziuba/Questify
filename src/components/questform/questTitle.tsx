@@ -9,7 +9,7 @@ export const QuestTitleInput = ({ questTitle, isQuestChallenge }:props) => {
     <input
       name="title"
       defaultValue={questTitle}
-      maxLength={20}
+      maxLength={30}
       required
       placeholder={
         isQuestChallenge ? "Create a challange!" : "Create a new quest"

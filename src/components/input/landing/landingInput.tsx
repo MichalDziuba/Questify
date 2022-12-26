@@ -15,6 +15,7 @@ const Input: FC<props> = ({ title,name,required,type }) => {
             placeholder={title}
             required={required}
             type={type}
+            autoComplete="new-password"
       />
     );
 }

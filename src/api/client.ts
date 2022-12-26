@@ -7,5 +7,6 @@ export const apiClient = axios.create({
 const token = getLocalStorageToken();
 
 export const headers = {
-  "Authorization":`Bearer ${token}`
+  "Authorization": `Bearer ${token}`,
+  
 }

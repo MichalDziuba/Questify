@@ -169,34 +169,18 @@ const QuestForm: FC<QuestFormProps> = ({
       selectForm.style.background = "#D3F6CE";
     }
   };
-  const completeQuest = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    const data: formData = {
-      title: questTitle,
-      level: questLevel,
-      category: questCategory,
-      date: questDate,
-      isChallenge: isChallenge,
-      isDone: true,
-    };
-    const dataPayload: editQuestPayload = {
-      owner: userEmail,
-      id: id,
-      data,
-    };
-    dispatch(actionEditQuest(dataPayload));
-  };
+
   return (
     <div
-      className={`w-72 h-72 rounded-2xl  flex flex-col justify-around items-center font-Montserrat relative  text-black ${isQuestChallenge ? "bg-deepblue " : "bg-white "
-        }`}
+      className={`w-72 h-72 rounded-2xl  flex flex-col justify-around items-center font-Montserrat relative  text-black ${
+        isQuestChallenge ? "bg-deepblue " : "bg-white "
+      }`}
     >
       <form
         id="questForm"
         className="w-full h-[80%] flex flex-col-reverse items-center justify-between"
         onSubmit={isQuestNew ? handleSubmit : handleEdit}
       >
-        {!isQuestNew && <ButtonDone completeQuest={completeQuest} />}
         <div className="flex justify-between w-full flex-row mb-4">
           <QuestCategory
             handleChangeCategories={handleChangeCategories}
@@ -206,16 +190,20 @@ const QuestForm: FC<QuestFormProps> = ({
           <div className="flex w-4/12 justify-between font-medium mr-3">
             {!isQuestNew && (
               <>
-                <ButtonDelete
-                  isQuestChallenge={isQuestChallenge}
-                  setModalOpen={setModalOpen}
-                />
+              
+                <ButtonCancel closeModalFn={closeModalFn} />
                 <SeparatorLine />
               </>
             )}
-            <ButtonCancel closeModalFn={closeModalFn} />
+            <ButtonDelete
+              isQuestChallenge={isQuestChallenge}
+              setModalOpen={setModalOpen}
+            />
             <SeparatorLine />
-            <ButtonStartSave isQuestNew={isQuestNew} />
+            <ButtonStartSave
+              isQuestNew={isQuestNew}
+              isQuestChallenge={isQuestChallenge} 
+            />
           </div>
         </div>
 

@@ -1,13 +1,16 @@
 import { FC, useState } from "react";
 import Backdrop from "@mui/material/Backdrop";
-import QuestForm from "../questform/questForm";
+import QuestForm, { editQuestPayload } from "../questform/questForm";
 import { VscEdit } from "react-icons/vsc";
 import { QuestLevel } from "./questLevel";
 import { QuestCategory } from "./questCategory";
 import { QuestTitle } from "./questTitle";
 import { QuestDate } from "./questDate";
-import { GiTrophyCup } from "react-icons/gi";
-
+import { ButtonDone } from "../buttons/doneButton";
+import { actionEditQuest } from "../../app/actions";
+import { formData } from "../questform/questForm";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { height } from "@mui/system";
 export type questType = {
   _id: string;
   title: string;
@@ -27,20 +30,41 @@ const Quest: FC<questType> = ({
   isChallenge,
   isDone,
 }: questType) => {
-  const [open, setOpen] = useState(false);
+  const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [openModalComplete,setOpenModalComplete]=useState(false)
   const handleClose = () => {
-    setOpen(false);
+    setOpenModalEdit(false);
   };
-
-  const handleEdit: () => Promise<void> = async () => {
-    setOpen(!open);
+  const userEmail = useAppSelector(state => state.app.userEmail);
+  const dispatch=useAppDispatch()
+  const handleEdit: () => void =  () => {
+    setOpenModalEdit(!openModalEdit);
   };
-
+  const handleOpenModalComplete: ()=>void = () => {
+    setOpenModalComplete(true)
+  }
+  const completeQuest = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    const data: formData = {
+      title: title,
+      level: level,
+      category: category,
+      date: date,
+      isChallenge: isChallenge,
+      isDone: true,
+    };
+    const dataPayload: editQuestPayload = {
+      owner: userEmail,
+      id: _id,
+      data,
+    };
+    dispatch(actionEditQuest(dataPayload));
+  };
 
   return (
-    <div>
+    <div className="relative">
       <div
-        className={`relative shadow-[3px_4px_4px_4px_rgba(21,57,90,0.03),-3px_-4px_4px_0px_rgba(21,57,90,0.03)] w-questMobile h-questMobile flex flex-col justify-around rounded-2xl font-Montserrat md:w-questDefault  md:h-questDefault ${
+        className={` shadow-[3px_4px_4px_4px_rgba(21,57,90,0.03),-3px_-4px_4px_0px_rgba(21,57,90,0.03)] w-questMobile h-questMobile flex flex-col justify-around rounded-2xl font-Montserrat md:w-questDefault  md:h-questDefault ${
           isChallenge ? "bg-deepblue " : "bg-white "
         }`}
         id={_id}
@@ -59,17 +83,18 @@ const Quest: FC<questType> = ({
           </button>
         </div>
         <div className="flex flex-col items-center ">
-          
           <QuestTitle text={title} isChallenge={isChallenge} />
           <QuestDate date={date} />
         </div>
-
-        <QuestCategory category={category} />
+        <div className="flex justify-between">
+          <QuestCategory category={category} />
+          <ButtonDone openModalComplete={handleOpenModalComplete} />
+        </div>
       </div>
-      {open && (
+      {openModalEdit && (
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={open}
+          open={openModalEdit}
           className="w-screen h-screen"
         >
           <QuestForm
@@ -83,6 +108,31 @@ const Quest: FC<questType> = ({
             id={_id}
             isDone={isDone}
           />
+        </Backdrop>
+      )}
+      {openModalComplete && (
+        <Backdrop
+          sx={{
+            color: "#fff",
+            position: "absolute",
+            top: "0",
+            width: "100%",
+            height: "100%",
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+          }}
+          open={openModalComplete}
+          className="rounded-2xl"
+        >
+          <div className="flex flex-col justify-around items-center w-11/12 h-4/5">
+            <p>
+              Do you want to set this {isChallenge ? "challange" : "quest"} as
+              completed? 
+            </p>
+            <div className="flex justify-around items-center w-full">
+              <button className="text-green-500">Yes</button>
+              <button className="text-red-600">No</button>
+            </div>
+          </div>
         </Backdrop>
       )}
     </div>

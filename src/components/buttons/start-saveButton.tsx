@@ -1,8 +1,9 @@
-import { IoCheckmarkDoneSharp } from "react-icons/io5";
+import { FiSave } from "react-icons/fi";
 type props = {
-    isQuestNew:boolean
+  isQuestNew: boolean;
+  isQuestChallenge: boolean;
 }
-export const ButtonStartSave = ({isQuestNew}:props) => {
+export const ButtonStartSave = ({isQuestNew,isQuestChallenge}:props) => {
     
     return (
       <button className="text-azure" type="submit">
@@ -16,8 +17,10 @@ export const ButtonStartSave = ({isQuestNew}:props) => {
             START
           </p>
         ) : (
-          <IoCheckmarkDoneSharp
-            className="text-green-500 w-5 h-5 duration-50 ease-in-out"
+          <FiSave
+            className={` w-5 h-5 duration-50 ease-in-out ${
+              isQuestChallenge ? "text-white" : "text-black"
+            }`}
             data-bs-toggle="tooltip"
             data-bs-placement="right"
             title="Save"

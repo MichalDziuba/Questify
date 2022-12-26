@@ -20,7 +20,15 @@ export const QuestList: FC<props> = ({ title, items }: props) => {
                 key={item._id}
               >
                 {item.isDone ? (
-                  <QuestDone title={item.title} _id={item._id} />
+                  <QuestDone
+                    category={item.category}
+                    date={item.date}
+                    isChallenge={item.isChallenge}
+                    level={item.level}
+                    title={item.title}
+                    _id={item._id}
+                    isDone={item.isDone}
+                  />
                 ) : (
                   <Quest
                     category={item.category}

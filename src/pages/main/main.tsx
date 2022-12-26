@@ -12,7 +12,6 @@ import {
   parseDate,
   parsedToday,
   parsedTomorrow,
-
 } from "../../features/date/date";
 import { QuestList } from "../../components/questlist/questList";
 
@@ -33,19 +32,24 @@ const MainPage: FC = () => {
   let tomorrowItems: questType[] = [];
   let nextDaysItems: questType[] = [];
   let unfulfilledItems: questType[] = [];
+  const completedQuests: questType[] = [];
 
   items.forEach((item) => {
     const itemDate = parseDate(item.date);
     const today = parsedToday;
     const tomorrow = parsedTomorrow;
-    if (itemDate.getTime() === today.getTime()) {
-      todayItems.push(item);
-    } else if (itemDate.getTime() === tomorrow.getTime()) {
-      tomorrowItems.push(item);
-    } else if (itemDate.getTime() > tomorrow.getTime()) {
-      nextDaysItems.push(item);
-    } else if (itemDate.getTime() < today.getTime()) {
-      unfulfilledItems.push(item);
+    if (item.isDone) {
+      completedQuests.push(item);
+    } else {
+      if (itemDate.getTime() === today.getTime()) {
+        todayItems.push(item);
+      } else if (itemDate.getTime() === tomorrow.getTime()) {
+        tomorrowItems.push(item);
+      } else if (itemDate.getTime() > tomorrow.getTime()) {
+        nextDaysItems.push(item);
+      } else if (itemDate.getTime() < today.getTime()) {
+        unfulfilledItems.push(item);
+      }
     }
   });
 
@@ -60,7 +64,11 @@ const MainPage: FC = () => {
     const bDate = parseDate(b.date);
     return aDate.getTime() - bDate.getTime();
   });
-
+  completedQuests.sort((a, b) => {
+      const aDate = parseDate(a.date);
+      const bDate = parseDate(b.date);
+      return aDate.getTime() - bDate.getTime();
+  })
   useEffect(() => {
     dispatch(actionGetAllQuests(token));
   }, [dispatch, token]);
@@ -85,6 +93,9 @@ const MainPage: FC = () => {
               )}
               {nextDaysItems.length > 0 && (
                 <QuestList items={nextDaysItems} title={"Next days:"} />
+              )}
+              {completedQuests.length > 0 && (
+                <QuestList items={completedQuests} title={"Completed:"} />
               )}
             </>
           ) : (
