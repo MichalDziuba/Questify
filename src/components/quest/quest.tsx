@@ -113,7 +113,7 @@ const Quest: FC<questType> = ({
       {openModalComplete && (
         <Backdrop
           sx={{
-            color: "#fff",
+            color: "#fffff",
             position: "absolute",
             top: "0",
             width: "100%",
@@ -123,14 +123,24 @@ const Quest: FC<questType> = ({
           open={openModalComplete}
           className="rounded-2xl"
         >
-          <div className="flex flex-col justify-around items-center w-11/12 h-4/5">
-            <p>
+          <div className="flex flex-col justify-around items-center w-11/12 h-4/5 text-azure">
+            <p className="text-center text-lg">
               Do you want to set this {isChallenge ? "challange" : "quest"} as
-              completed? 
+              completed?
             </p>
-            <div className="flex justify-around items-center w-full">
-              <button className="text-green-500">Yes</button>
-              <button className="text-red-600">No</button>
+            <div className="flex justify-around items-center w-full text-lg">
+              <button
+                className="text-white p-1 border-solid border-green-500 w-fit h-fit"
+                onClick={completeQuest}
+              >
+                Yes
+              </button>
+              <button
+                className="text-white p-1 border-solid border-red-600 w-fit h-fit"
+                onClick={() => setOpenModalComplete(false)}
+              >
+                No
+              </button>
             </div>
           </div>
         </Backdrop>
