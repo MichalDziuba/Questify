@@ -1,10 +1,16 @@
-import { RiLogoutCircleRLine } from "react-icons/ri";
 import Notiflix from "notiflix";
 import { actionLogoutUser } from "../../app/actions";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { LogoutButton } from "../buttons/logoutButton";
+import { ChallengeButton } from "../buttons/challengeButton";
 
-export const Header = () => {
-  const userName = useAppSelector((state) => state.app.userName) || "";
+type HeaderProps = {
+  openChallengesList:()=>void;
+  isOpenChallengesList:boolean;
+}
+
+export const Header = ({openChallengesList,isOpenChallengesList}:HeaderProps) => {
+  const userName = useAppSelector((state) => state.app.userName); // deleted =>|| "";
   const token = useAppSelector((state) => state.app.userToken);
   const userFirstChar = userName.charAt(0);
   const dispatch = useAppDispatch();
@@ -22,25 +28,31 @@ export const Header = () => {
 
         <div className="flex">
           <div className="flex items-center justify-center">
+            <div className="md:hidden flex items-center">
+              <ChallengeButton
+                handleToggleList={openChallengesList}
+                isListOpen={isOpenChallengesList}
+              />
+            </div>
+
             <span className="rounded-full bg-navy w-8 h-8 text-white text-lg font-medium flex justify-center items-center">
               {userFirstChar}
             </span>
-            <p className="hidden md:block ml-2 text-gray text-lg font-light font-Montserrat">{userName} Quest Log</p>
+            <p className="hidden md:block ml-2 text-gray text-lg font-light font-Montserrat">
+              {userName} Quest Log
+            </p>
           </div>
-
-          <button className="md:hidden">
-            <RiLogoutCircleRLine
-              className="fill-navy w-8 h-8 ml-2"
-              onClick={handleLogout}
-            />
-          </button>
+          <div className="md:hidden flex items-center">
+            <LogoutButton handleLogout={handleLogout} />
+          </div>
         </div>
-        <button className="hidden md:block">
-          <RiLogoutCircleRLine
-            className="fill-navy w-8 h-8 ml-2"
-            onClick={handleLogout}
+        <div className="items-center justify-center hidden md:flex">
+          <ChallengeButton
+            handleToggleList={openChallengesList}
+            isListOpen={isOpenChallengesList}
           />
-        </button>
+          <LogoutButton handleLogout={handleLogout} />
+        </div>
       </div>
     </nav>
   );

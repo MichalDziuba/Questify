@@ -1,10 +1,10 @@
-import { FC } from "react";
+
 type props = {
   title: string;
   fn: () => void;
 
 };
-const Button: FC<props> = ({ title,fn }) => {
+export const StartPageButton = ({ title, fn }: props) => {
   return (
     <button
       className="bg-orange rounded text-lg text-white font-medium font-Roboto
@@ -15,4 +15,4 @@ const Button: FC<props> = ({ title,fn }) => {
     </button>
   );
 };
-export default Button;
+

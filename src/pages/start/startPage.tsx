@@ -1,9 +1,9 @@
 import Notiflix from "notiflix";
-import { FC, FormEvent, useState, useEffect } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { actionLoginUser, actionRegisterUser } from "../../app/actions";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import Button from "../../components/buttons/startPageButton";
+import {StartPageButton} from "../../components/buttons/startPageButton";
 import { Login } from "./forms/loginForm/login";
 import Register from "./forms/registerForm/register";
 import Loader from "../../components/loading/loader";
@@ -24,7 +24,8 @@ type entryForm = {
   login: entryName;
 };
 
-const StartPage: FC = () => {
+const StartPage= () => {
+
   const landingForms: entryForm = {
     register: "register",
     login: "login",
@@ -36,6 +37,7 @@ const StartPage: FC = () => {
   const isLoading = useAppSelector((state) => state.app.isLoading);
 
   const [activeForm, setActiveForm] = useState(landingForms.register);
+
   const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -94,13 +96,13 @@ const StartPage: FC = () => {
             </div>
             <ul className="flex justify-around w-full mt-8">
               <li>
-                <Button
+                <StartPageButton
                   title="Login"
                   fn={() => setActiveForm(landingForms.login)}
                 />
               </li>
               <li>
-                <Button
+                <StartPageButton
                   title="Register"
                   fn={() => setActiveForm(landingForms.register)}
                 />
