@@ -1,7 +1,7 @@
 {
   "name": "questify",
   "version": "1.0.0",
-  "homepage": "http://MichalDziuba.github.io/Questify",
+  "homepage": "/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
