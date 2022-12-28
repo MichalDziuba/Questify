@@ -105,7 +105,7 @@ const StartPage = () => {
             <div className=" text-lg text-gray text-center font-Montserrat pb-4 lg:text-xl ">
               Choose you want to sign up or log in!
             </div>
-            <ul className="flex justify-around w-full mt-8 lg:items-start lg:w-1/2">
+            <ul className="flex justify-around w-full mt-8 lg:items-start lg:w-4/6">
               <li>
                   <StartPageButton
                     activeClass={isLoginButtonActive}
