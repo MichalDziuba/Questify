@@ -5,10 +5,13 @@ import {
 } from "../components/questForm/questForm";
 import { questType } from "./../components/quest/quest";
 
-
 import Notiflix from "notiflix";
 import { apiClient } from "../api/client";
-import { saveTokenToLocalStorage, addToLocalStorage, getLocalStorageToken } from "../features/localStorage/localstorageData";
+import {
+  saveTokenToLocalStorage,
+  addToLocalStorage,
+  getLocalStorageToken,
+} from "../features/localStorage/localStorageData";
 
 export const loginUser = async (payload: object) => {
   try {

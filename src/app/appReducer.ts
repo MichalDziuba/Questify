@@ -1,6 +1,3 @@
-
-
-
 import {
   actionLoginUser,
   actionRegisterUser,
@@ -12,7 +9,11 @@ import {
 } from "./actions";
 import { createReducer } from "@reduxjs/toolkit";
 import { questType } from "../components/quest/quest";
-import { getLocalStorageToken, getLocalStorageName, getLocalStorageEmail } from "../features/localStorage/localstorageData";
+import {
+  getLocalStorageToken,
+  getLocalStorageName,
+  getLocalStorageEmail,
+} from "../features/localStorage/localStorageData";
 
 export type AppState = {
   userToken: string;

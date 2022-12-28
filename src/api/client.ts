@@ -1,6 +1,5 @@
-
 import axios from "axios";
-import { getLocalStorageToken } from "../features/localStorage/localstorageData";
+import { getLocalStorageToken } from "../features/localStorage/localStorageData";
 
 export const apiClient = axios.create({
   baseURL: "https://questify.onrender.com/",
