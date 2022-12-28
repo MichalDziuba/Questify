@@ -1,4 +1,4 @@
-import { getLocalStorageToken } from './../features/localstorage/localstorageData';
+import { getLocalStorageToken } from "../features/localStorage/localstorageData";
 import axios from "axios";
 
 export const apiClient = axios.create({
@@ -7,6 +7,5 @@ export const apiClient = axios.create({
 const token = getLocalStorageToken();
 
 export const headers = {
-  "Authorization": `Bearer ${token}`,
-  
-}
+  Authorization: `Bearer ${token}`,
+};

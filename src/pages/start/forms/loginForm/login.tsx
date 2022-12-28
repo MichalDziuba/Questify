@@ -1,12 +1,13 @@
-import { FC, FormEvent } from "react";
+import {  FormEvent } from "react";
 import Input from "../../../../components/input/landing/landingInput";
 import { GoButton } from "../../../../components/buttons/goButton";
+import { regexEmail } from "../../../../features/regex/regex";
 
-type props = {
+type loginProps = {
   fn: (e: FormEvent<HTMLFormElement>) => void;
 };
 
-export const Login: FC<props> = ({ fn }) => {
+export const Login= ({ fn }: loginProps) => {
   return (
     <form
       className="flex flex-col w-full justify-center items-center mt-6 min-h-[208px] relative"
@@ -15,14 +16,16 @@ export const Login: FC<props> = ({ fn }) => {
       <Input
         title="Email"
         name="email"
-        // required={true}
+        required={true}
+        pattern={regexEmail}
         type="email"
       />
       <Input
         title="Password"
         name="password"
-        // required={true}
+        required={true}
         type="password"
+        autocomplete="on"
       />
       <GoButton text="Go!" />
     </form>

@@ -1,17 +1,18 @@
-import { FC } from "react";
 import Quest, { questType } from "../quest/quest";
-import { QuestDone } from "../questdone/questDone";
+import { QuestDone } from "../questDone/questDone";
 
-type props = {
+type questListProps = {
   title: string;
   items: questType[];
 };
-//gap-4 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5
-export const QuestList: FC<props> = ({ title, items }: props) => {
+export const QuestList = ({ title, items }: questListProps) => {
   return (
     <div className="flex flex-col justify-center items-center w-[95%] max-lg:pb-10">
       <div className="flex flex-col w-full justify-center items-center flex-wrap">
-       <div className="w-full flex justify-start"> <p className="mt-4 mb-4 text-lg text-left">{title}</p></div>
+        <div className="w-full flex justify-start">
+          {" "}
+          <p className="mt-4 mb-4 text-lg text-left">{title}</p>
+        </div>
         <ul className="flex flex-col items-center justify-center gap-4 w-full flex-wrap md:flex-row md:justify-start ">
           {items.map((item) => {
             return (

@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import Backdrop from "@mui/material/Backdrop";
-import QuestForm, { editQuestPayload } from "../questform/questForm";
+import QuestForm, { editQuestPayload } from "../questForm/questForm";
 import { VscEdit } from "react-icons/vsc";
 import { QuestLevel } from "./questLevel";
 import { QuestCategory } from "./questCategory";
@@ -8,7 +8,7 @@ import { QuestTitle } from "./questTitle";
 import { QuestDate } from "./questDate";
 import { ButtonDone } from "../buttons/doneButton";
 import { actionEditQuest } from "../../app/actions";
-import { formData } from "../questform/questForm";
+import { formData } from "../questForm/questForm";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 export type questType = {
   _id: string;
@@ -30,18 +30,18 @@ const Quest: FC<questType> = ({
   isDone,
 }: questType) => {
   const [openModalEdit, setOpenModalEdit] = useState(false);
-  const [openModalComplete,setOpenModalComplete]=useState(false)
+  const [openModalComplete, setOpenModalComplete] = useState(false);
   const handleClose = () => {
     setOpenModalEdit(false);
   };
-  const userEmail = useAppSelector(state => state.app.userEmail);
-  const dispatch=useAppDispatch()
-  const handleEdit: () => void =  () => {
+  const userEmail = useAppSelector((state) => state.app.userEmail);
+  const dispatch = useAppDispatch();
+  const handleEdit: () => void = () => {
     setOpenModalEdit(!openModalEdit);
   };
-  const handleOpenModalComplete: ()=>void = () => {
-    setOpenModalComplete(true)
-  }
+  const handleOpenModalComplete: () => void = () => {
+    setOpenModalComplete(true);
+  };
   const completeQuest = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const data: formData = {
@@ -64,7 +64,7 @@ const Quest: FC<questType> = ({
     <div className="relative">
       <div
         className={` shadow-[3px_4px_4px_4px_rgba(21,57,90,0.03),-3px_-4px_4px_0px_rgba(21,57,90,0.03)] w-questMobile h-questMobile flex flex-col justify-around rounded-2xl font-Montserrat md:w-questDefault  md:h-questDefault ${
-          isChallenge ? "bg-deepblue " : "bg-white "
+          isChallenge ? "bg-deepBlue " : "bg-white "
         }`}
         id={_id}
       >
@@ -94,7 +94,7 @@ const Quest: FC<questType> = ({
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={openModalEdit}
-          className="w-screen h-screen"
+          className="w-screen h-full"
         >
           <QuestForm
             closeModalFn={handleClose}
@@ -122,9 +122,9 @@ const Quest: FC<questType> = ({
           open={openModalComplete}
           className="rounded-2xl"
         >
-          <div className="flex flex-col justify-around items-center w-11/12 h-4/5 text-white border-solid border-deepblue border-2 bg-navy rounded-2xl">
+          <div className="flex flex-col justify-around items-center w-11/12 h-4/5 text-white border-solid border-deepBlue border-2 bg-navy rounded-2xl">
             <p className="text-center text-lg">
-              Do you want to set this {isChallenge ? "challange" : "quest"} as
+              Do you want to set this {isChallenge ? "challenge" : "quest"} as
               completed?
             </p>
             <div className="flex justify-around items-center w-full text-lg">

@@ -1,14 +1,14 @@
-import { formData } from "../components/questform/questForm";
+import { formData } from "../components/questForm/questForm";
 import {
   deleteQuestData,
   editQuestPayload,
-} from "../components/questform/questForm";
+} from "../components/questForm/questForm";
 import { questType } from "./../components/quest/quest";
 import {
   addToLocalStorage,
   getLocalStorageToken,
-} from "./../features/localstorage/localstorageData";
-import { saveTokenToLocalStorage } from "../features/localstorage/localstorageData";
+} from "../features/localStorage/localstorageData";
+import { saveTokenToLocalStorage } from "../features/localStorage/localstorageData";
 import Notiflix from "notiflix";
 import { apiClient } from "../api/client";
 

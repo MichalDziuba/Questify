@@ -8,7 +8,6 @@ import { appReducer } from "./appReducer";
 export const store = configureStore({
   reducer: {
     app: appReducer,
-    // quests: questReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

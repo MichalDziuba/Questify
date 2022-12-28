@@ -10,18 +10,26 @@
   .background {
     background: url(./images/rectangle1.png) no-repeat,
       url(./images/rectangle2.png) no-repeat;
-    background-position: bottom -3% right -5%;
+    background-position: bottom right 1%;
     background-size: contain;
   }
   
   @media screen and (min-width: 768px) {
     .background {
-      background: url(./images/pic1.png), url(./images/pic2.png);
+      background: url(./images/pic1-large.png), url(./images/pic2-large.png);
       background-repeat: no-repeat, no-repeat, no-repeat;
-      background-position: top right -43%, bottom right 40%;
+      background-position: top right -160px, bottom right -160px;
       background-size: auto;
     }
     
+  }
+  @media  screen and (min-width: 1024px) {
+    .background {
+      background: url(./images/pic1-large.png), url(./images/pic2-large.png);
+      background-repeat: no-repeat, no-repeat;
+      background-position: top right  , bottom right ;
+      background-size: auto;
+    }
   }
   
 }

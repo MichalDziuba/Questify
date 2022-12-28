@@ -6,12 +6,12 @@ module.exports = {
       colors: {
         azure: "#00D7FF",
         orange: "#FF851C",
-        navyblue: "#242A37",
+        navyBlue: "#242A37",
         navy: "#3E4E6C",
         black: "#282828",
         gray: "#B9C3C8",
-        darkwhite: "#F2F3F7",
-        deepblue: "#15395A",
+        darkWhite: "#F2F3F7",
+        deepBlue: "#15395A",
       },
       fontFamily: {
         Roboto: ["Roboto", "sans-serif"],

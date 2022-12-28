@@ -1,8 +1,8 @@
 import {
   getLocalStorageName,
   getLocalStorageEmail,
-} from "../features/localstorage/localstorageData";
-import { getLocalStorageToken } from "../features/localstorage/localstorageData";
+} from "../features/localStorage/localstorageData";
+import { getLocalStorageToken } from "../features/localStorage/localstorageData";
 
 import {
   actionLoginUser,
@@ -64,10 +64,8 @@ export const appReducer = createReducer(initialState, (builder) => {
     })
     .addCase(actionLogoutUser.pending, (state) => {
       state.status = "pending";
-      state.isLoading = true;
     })
     .addCase(actionLogoutUser.rejected, (state) => {
-      state.isLoading = false;
       state.userEmail = "";
       state.userName = "";
       state.userToken = "";
@@ -75,7 +73,6 @@ export const appReducer = createReducer(initialState, (builder) => {
     })
     .addCase(actionLogoutUser.fulfilled, (state) => {
       state.status = "pending";
-      state.isLoading = false;
       state.userEmail = "";
       state.userName = "";
       state.userToken = "";

@@ -1,9 +1,12 @@
 import { AiOutlineDelete } from "react-icons/ai";
-type props = {
+type deleteButtonProps = {
   isQuestChallenge: boolean;
   setModalOpen: (value: React.SetStateAction<boolean>) => void;
 };
-export const ButtonDelete = ({ isQuestChallenge, setModalOpen }: props) => {
+export const ButtonDelete = ({
+  isQuestChallenge,
+  setModalOpen,
+}: deleteButtonProps) => {
   return (
     <button
       type="button"

@@ -3,9 +3,9 @@ import { AddButton } from "../../components/buttons/addButton";
 import { Header } from "../../components/header/header";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Loader from "../../components/loading/loader";
-import EmptyState from "../../components/emptystate/emptyState";
+import EmptyState from "../../components/emptyState/emptyState";
 import Backdrop from "@mui/material/Backdrop";
-import QuestForm from "../../components/questform/questForm";
+import QuestForm from "../../components/questForm/questForm";
 import { actionGetAllQuests } from "../../app/actions";
 import { questType } from "../../components/quest/quest";
 import {
@@ -13,7 +13,7 @@ import {
   parsedToday,
   parsedTomorrow,
 } from "../../features/date/date";
-import { QuestList } from "../../components/questlist/questList";
+import { QuestList } from "../../components/questList/questList";
 import { sortAscendingByDate } from "../../features/sort/ascendingByDate";
 import { ChallengesList } from "../../components/challengesList/challengesList";
 
@@ -32,7 +32,7 @@ const MainPage: FC = () => {
   };
   const handleToggleChallengesList = () => {
     setOpenChallengesList(!isOpenChallengesList);
-  }
+  };
 
   const todayItems: questType[] = [];
   const tomorrowItems: questType[] = [];
@@ -75,8 +75,11 @@ const MainPage: FC = () => {
   }, [dispatch, token]);
 
   return (
-    <div className=" min-h-screen h-fit bg-darkwhite pb-8">
-      <Header isOpenChallengesList={isOpenChallengesList} openChallengesList={handleToggleChallengesList} />
+    <div className=" min-h-screen h-fit bg-darkWhite pb-8">
+      <Header
+        isOpenChallengesList={isOpenChallengesList}
+        openChallengesList={handleToggleChallengesList}
+      />
       {isLoading ? (
         <Loader />
       ) : (

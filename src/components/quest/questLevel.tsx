@@ -1,13 +1,10 @@
 import { GoPrimitiveDot } from "react-icons/go"
 
-
-
-type Props = {
+type questLevelProps = {
   level: string;
- 
 };
 
-export const QuestLevel = ({ level }: Props) => {
+export const QuestLevel = ({ level }: questLevelProps) => {
   let dotClass;
   switch (level) {
     case "easy":

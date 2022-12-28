@@ -22,7 +22,7 @@ export const Header = ({openChallengesList,isOpenChallengesList}:HeaderProps) =>
   };
 
   return (
-    <nav className="h-16 bg-navyblue w-screen flex items-center justify-center  ">
+    <nav className="h-16 bg-navyBlue w-screen flex items-center justify-center  ">
       <div className="flex justify-between items-center w-[93%]">
         <h2 className=" text-azure text-xl">Questify</h2>
 

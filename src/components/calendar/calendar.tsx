@@ -1,20 +1,20 @@
-import React, { FC } from "react";
+import React from "react";
 import { Dayjs } from "dayjs";
 import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-type props = {
+type calendarProps = {
   dateValue: Dayjs | null;
   setDateValue: React.Dispatch<React.SetStateAction<Dayjs | null>>;
   isQuestChallenge: boolean;
 };
 
-const Calendar: FC<props> = ({
+const Calendar = ({
   dateValue,
   setDateValue,
   isQuestChallenge,
-}: props) => {
+}: calendarProps) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker

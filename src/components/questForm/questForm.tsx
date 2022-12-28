@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
-import React, { FC, useState } from "react";
-import Calendar from "../callendar/callendar";
+import React, { useState } from "react";
+import Calendar from "../calendar/calendar";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   actionAddQuest,
@@ -14,11 +14,9 @@ import { QuestCategory } from "./questCategory";
 import { ChallengeQuestButton } from "../buttons/challenge-questButton";
 import { QuestTitleInput } from "./questTitle";
 import { DotLevel } from './questDotLevel';
-
 import { SeparatorLine } from "./separatorLine";
 import { ButtonCancel } from "../buttons/cancelButton";
 import { ButtonDelete } from "../buttons/deleteButton";
-import { ButtonDone } from '../buttons/doneButton'
 import { ButtonStartSave } from "../buttons/start-saveButton";
 
 export type editQuestPayload = {
@@ -51,7 +49,7 @@ export type deleteQuestData = {
   owner: string;
   id: string;
 };
-const QuestForm: FC<QuestFormProps> = ({
+const QuestForm = ({
   closeModalFn,
   questCategory,
   questLevel,
@@ -61,7 +59,7 @@ const QuestForm: FC<QuestFormProps> = ({
   isChallenge,
   id,
   isDone,
-}) => {
+}: QuestFormProps) => {
   const getDotColor = (level: string) => {
     switch (level) {
       case "easy":
@@ -173,7 +171,7 @@ const QuestForm: FC<QuestFormProps> = ({
   return (
     <div
       className={`w-72 h-72 rounded-2xl  flex flex-col justify-around items-center font-Montserrat relative  text-black ${
-        isQuestChallenge ? "bg-deepblue " : "bg-white "
+        isQuestChallenge ? "bg-deepBlue " : "bg-white "
       }`}
     >
       <form
@@ -190,7 +188,6 @@ const QuestForm: FC<QuestFormProps> = ({
           <div className="flex w-4/12 justify-between font-medium mr-3">
             {!isQuestNew && (
               <>
-              
                 <ButtonCancel closeModalFn={closeModalFn} />
                 <SeparatorLine />
               </>
@@ -202,7 +199,7 @@ const QuestForm: FC<QuestFormProps> = ({
             <SeparatorLine />
             <ButtonStartSave
               isQuestNew={isQuestNew}
-              isQuestChallenge={isQuestChallenge} 
+              isQuestChallenge={isQuestChallenge}
             />
           </div>
         </div>
