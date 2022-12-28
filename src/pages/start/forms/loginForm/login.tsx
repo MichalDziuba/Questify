@@ -10,7 +10,7 @@ type loginProps = {
 export const Login= ({ fn }: loginProps) => {
   return (
     <form
-      className="flex flex-col w-full justify-center items-center mt-6 min-h-[208px] relative"
+      className="flex flex-col w-full justify-center items-center mt-6 min-h-[208px] relative lg:items-start"
       onSubmit={fn}
     >
       <Input
