@@ -24,3 +24,42 @@ yarn-error.log*
 
 # Local Netlify folder
 .netlify
+# Ignore production build directory
+build/
+
+# Ignore compiled TypeScript files
+*.js
+*.js.map
+
+# Ignore log files and directories
+logs/
+*.log
+
+# Ignore Netlify functions
+functions/
+
+# Ignore local environment variables
+.env.local
+
+# Ignore cache files
+.cache
+
+# Ignore yarn workspaces
+.yarn/
+
+# Ignore cypress test files
+cypress/
+
+# Ignore editor configuration files
+.idea/
+.vscode/
+
+# Ignore testing tools and reports
+coverage/
+jest/
+
+# Ignore miscellaneous files
+.DS_Store
+.env.test
+npm-debug.log
+yarn-error.log
