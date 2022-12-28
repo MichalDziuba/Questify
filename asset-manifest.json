@@ -1,29 +1,29 @@
 {
   "files": {
-    "main.css": "/Questify/static/css/main.7041e1c2.css",
-    "main.js": "/Questify/static/js/main.ba5e1ca6.js",
-    "static/js/83.da0f98b1.chunk.js": "/Questify/static/js/83.da0f98b1.chunk.js",
-    "static/js/509.81733115.chunk.js": "/Questify/static/js/509.81733115.chunk.js",
+    "main.css": "/Questify/static/css/main.3aef0872.css",
+    "main.js": "/Questify/static/js/main.60e5b698.js",
+    "static/js/712.f92223c8.chunk.js": "/Questify/static/js/712.f92223c8.chunk.js",
+    "static/js/186.5660237b.chunk.js": "/Questify/static/js/186.5660237b.chunk.js",
     "static/js/475.43847e50.chunk.js": "/Questify/static/js/475.43847e50.chunk.js",
     "static/js/787.15a2ddb4.chunk.js": "/Questify/static/js/787.15a2ddb4.chunk.js",
     "static/js/523.d24edceb.chunk.js": "/Questify/static/js/523.d24edceb.chunk.js",
     "static/js/112.c401c7a2.chunk.js": "/Questify/static/js/112.c401c7a2.chunk.js",
-    "static/media/pic2.png": "/Questify/static/media/pic2.36fd278b47920e447ef2.png",
+    "static/media/pic2-large.png": "/Questify/static/media/pic2-large.5e690ccc99363405399d.png",
     "static/media/empty.png": "/Questify/static/media/empty.f5c9b5fc8e4bb3a3d043.png",
-    "static/media/pic1.png": "/Questify/static/media/pic1.2839c33d517c9269fb83.png",
+    "static/media/pic1-large.png": "/Questify/static/media/pic1-large.fb52f00a299ec302c7d3.png",
     "static/media/rectangle2.png": "/Questify/static/media/rectangle2.096c3526bb3afaf4d61e.png",
     "index.html": "/Questify/index.html",
-    "main.7041e1c2.css.map": "/Questify/static/css/main.7041e1c2.css.map",
-    "main.ba5e1ca6.js.map": "/Questify/static/js/main.ba5e1ca6.js.map",
-    "83.da0f98b1.chunk.js.map": "/Questify/static/js/83.da0f98b1.chunk.js.map",
-    "509.81733115.chunk.js.map": "/Questify/static/js/509.81733115.chunk.js.map",
+    "main.3aef0872.css.map": "/Questify/static/css/main.3aef0872.css.map",
+    "main.60e5b698.js.map": "/Questify/static/js/main.60e5b698.js.map",
+    "712.f92223c8.chunk.js.map": "/Questify/static/js/712.f92223c8.chunk.js.map",
+    "186.5660237b.chunk.js.map": "/Questify/static/js/186.5660237b.chunk.js.map",
     "475.43847e50.chunk.js.map": "/Questify/static/js/475.43847e50.chunk.js.map",
     "787.15a2ddb4.chunk.js.map": "/Questify/static/js/787.15a2ddb4.chunk.js.map",
     "523.d24edceb.chunk.js.map": "/Questify/static/js/523.d24edceb.chunk.js.map",
     "112.c401c7a2.chunk.js.map": "/Questify/static/js/112.c401c7a2.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7041e1c2.css",
-    "static/js/main.ba5e1ca6.js"
+    "static/css/main.3aef0872.css",
+    "static/js/main.60e5b698.js"
   ]
 }
