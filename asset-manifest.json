@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Questify/static/css/main.3aef0872.css",
-    "main.js": "/Questify/static/js/main.3af594a7.js",
+    "main.js": "/Questify/static/js/main.a91ffa78.js",
     "static/js/712.f92223c8.chunk.js": "/Questify/static/js/712.f92223c8.chunk.js",
     "static/js/186.5660237b.chunk.js": "/Questify/static/js/186.5660237b.chunk.js",
     "static/js/475.43847e50.chunk.js": "/Questify/static/js/475.43847e50.chunk.js",
@@ -14,7 +14,7 @@
     "static/media/rectangle2.png": "/Questify/static/media/rectangle2.096c3526bb3afaf4d61e.png",
     "index.html": "/Questify/index.html",
     "main.3aef0872.css.map": "/Questify/static/css/main.3aef0872.css.map",
-    "main.3af594a7.js.map": "/Questify/static/js/main.3af594a7.js.map",
+    "main.a91ffa78.js.map": "/Questify/static/js/main.a91ffa78.js.map",
     "712.f92223c8.chunk.js.map": "/Questify/static/js/712.f92223c8.chunk.js.map",
     "186.5660237b.chunk.js.map": "/Questify/static/js/186.5660237b.chunk.js.map",
     "475.43847e50.chunk.js.map": "/Questify/static/js/475.43847e50.chunk.js.map",
@@ -24,6 +24,6 @@
   },
   "entrypoints": [
     "static/css/main.3aef0872.css",
-    "static/js/main.3af594a7.js"
+    "static/js/main.a91ffa78.js"
   ]
 }
