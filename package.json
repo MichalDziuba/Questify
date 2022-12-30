@@ -1,7 +1,7 @@
 {
   "name": "questify",
   "version": "1.0.0",
-  "homepage": "https://questify-md.netlify.app",
+  "homepage": "https://questify-md.netlify.app/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",

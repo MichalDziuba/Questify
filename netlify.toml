@@ -1,0 +1,21 @@
+# This is the base configuration for all environments
+[base]
+
+# The name of the site
+name = "Questify"
+
+# Define redirects
+[[redirects]]
+  from = "/auth"
+  to = "/auth"
+  status = 302
+
+[[redirects]]
+  from = "*"
+  to = "/"
+  status = 404
+  
+# Enable TLS/SSL
+[ssl]
+  enable = true
+  redirect = true
