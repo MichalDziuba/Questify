@@ -18,7 +18,7 @@ const Register = ({ fn }: registerProps) => {
         name="email"
         required={true}
         type="email"
-        pattern={regexEmail}
+        pattern={regexEmail.toString()}
       />
       <Input
         title="Password"
