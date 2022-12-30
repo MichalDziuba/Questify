@@ -5,21 +5,12 @@
 name = "Questify"
 
 # Define redirects
-[[redirects]]
-  from = "/auth"
-  to = "/auth"
-  status = 302
-
-[[redirects]]
-  from = "*"
-  to = "/"
-  status = 404
 
  [[redirects]]
   from = "/*"
   to = "/"
   status = 200 
-  
+
 # Enable TLS/SSL
 [ssl]
   enable = true
