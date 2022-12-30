@@ -13,7 +13,7 @@ import { QuestDifficult } from "./questDifficult";
 import { QuestCategory } from "./questCategory";
 import { ChallengeQuestButton } from "../buttons/challenge-questButton";
 import { QuestTitleInput } from "./questTitle";
-import { DotLevel } from "./questDotLevel";
+import { DotLevel } from './questDotLevel';
 import { SeparatorLine } from "./separatorLine";
 import { ButtonCancel } from "../buttons/cancelButton";
 import { ButtonDelete } from "../buttons/deleteButton";
@@ -186,16 +186,16 @@ const QuestForm = ({
           />
 
           <div className="flex w-4/12 justify-between font-medium mr-3">
-            <ButtonCancel closeModalFn={closeModalFn} />
             {!isQuestNew && (
-              <><SeparatorLine />
-                <ButtonDelete
-                  isQuestChallenge={isQuestChallenge}
-                  setModalOpen={setModalOpen}
-                />
-                
+              <>
+                <ButtonCancel closeModalFn={closeModalFn} />
+                <SeparatorLine />
               </>
             )}
+            <ButtonDelete
+              isQuestChallenge={isQuestChallenge}
+              setModalOpen={setModalOpen}
+            />
             <SeparatorLine />
             <ButtonStartSave
               isQuestNew={isQuestNew}
