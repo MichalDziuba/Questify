@@ -49,16 +49,26 @@ const StartPage = () => {
     inactiveBtnFn(false);
     activeFormFn(form);
   };
+
   const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const regexPassword = /^(?=.*[0-9])(?=.*[A-Z])(.{8,})$/;
     const form = e.currentTarget;
     const name = form.userName.value;
     const email = form.email.value;
     const password = form.password.value;
     const passwordRepeat = form.passwordRepeat.value;
+    if (!regexPassword.test(password)) {
+     Notiflix.Notify.info(
+       "Invalid password. Password must contain at least one uppercase letter, one digit, and have a minimum length of 8 characters."
+      ); 
+      return false 
+    }
     if (password !== passwordRepeat) {
       Notiflix.Notify.failure("The passwords are not the same. Try again.");
-    } else {
+      return false
+    }
+    else {
       const data: registerData = {
         name: name,
         email: email,
@@ -79,6 +89,7 @@ const StartPage = () => {
       password: password,
     };
     await dispatch(actionLoginUser(data));
+    console.log(await dispatch(actionLoginUser(data)));
     await navigate("/");
   };
   useEffect(() => {

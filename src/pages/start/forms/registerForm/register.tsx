@@ -1,5 +1,5 @@
 import { FormEvent } from "react";
-import Input from "../../../../components/input/landing/landingInput";
+import Input from "../../../../components/input/startPage/startPageInput";
 import { GoButton } from "../../../../components/buttons/goButton";
 import { regexEmail } from "../../../../features/regex/regex";
 type registerProps = {
