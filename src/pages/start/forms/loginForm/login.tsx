@@ -17,7 +17,7 @@ export const Login = ({ fn }: loginProps) => {
         title="Email"
         name="email"
         required={true}
-        pattern={regexEmail.toString()}
+        pattern={regexEmail}
         type="email"
       />
       <Input
