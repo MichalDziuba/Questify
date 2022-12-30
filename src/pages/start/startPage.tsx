@@ -89,7 +89,6 @@ const StartPage = () => {
       password: password,
     };
     await dispatch(actionLoginUser(data));
-    console.log(await dispatch(actionLoginUser(data)));
     await navigate("/");
   };
   useEffect(() => {
