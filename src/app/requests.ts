@@ -56,7 +56,6 @@ export const logoutUser = async (payload: string) => {
 };
 export const addNewQuest = async (payload: formData) => {
   const token = getLocalStorageToken();
-  console.log(payload);
   try {
     const response = await apiClient.post("items/", payload, {
       headers: {
@@ -75,7 +74,7 @@ export const addNewQuest = async (payload: formData) => {
       _id: _id,
       isDone: isDone,
     };
-    console.log(quest);
+
     return quest;
   } catch (e) {
     console.log(e);
