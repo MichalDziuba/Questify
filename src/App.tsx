@@ -14,7 +14,15 @@ const App: FC = () => {
 
           <Route path="/" element={<PrivateRoute outlet={<MainPage />} />} />
 
-          <Route path="*" element={<div>Nothing's here</div>} />
+          <Route
+            path="/*"
+            element={
+              <div className="flex flex-col  items-center w-screen h-screen">
+                <h2 className="text-2xl mt-12">404</h2>
+                <p className="text-lg">Not found</p>
+              </div>
+            }
+          />
         </Routes>
       </Suspense>
     </div>
