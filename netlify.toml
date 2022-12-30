@@ -14,6 +14,11 @@ name = "Questify"
   from = "*"
   to = "/"
   status = 404
+
+ [[redirects]]
+  from = "/*"
+  to = "/"
+  status = 200 
   
 # Enable TLS/SSL
 [ssl]
