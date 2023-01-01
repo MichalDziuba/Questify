@@ -25,7 +25,7 @@ export const DeleteModal = ({
       open={modalDeleteOpen}
       className="open:animate-fade-in"
     >
-      <div className=" flex flex-col w-64 h-36 items-center justify-evenly border-solid border-2 bg-navyBlue rounded duration-500 ease-in-out ">
+      <div className=" flex flex-col w-64 h-36 items-center justify-evenly rounded-xl border-solid border-2 border-deepBlue bg-navy duration-500 ease-in-out ">
         <h2 className="text-center text-lg">{`Do you want to delete this ${
           isQuestChallenge ? "challenge" : "quest"
         }?`}</h2>

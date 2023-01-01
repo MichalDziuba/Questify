@@ -16,6 +16,7 @@ import {
 import { QuestList } from "../../components/questList/questList";
 import { sortAscendingByDate } from "../../features/sort/ascendingByDate";
 import { ChallengesList } from "../../components/challengesList/challengesList";
+import { stopPropagation } from "../../features/stopPropagation/stopPropagation";
 
 const MainPage: FC = () => {
   const isLoading = useAppSelector((state) => state.app.isLoading);
@@ -116,7 +117,9 @@ const MainPage: FC = () => {
 
           <Backdrop
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={open}
+              open={open}
+              onClick={handleClose}
+              
           >
             <QuestForm
               questCategory="stuff"
@@ -128,6 +131,7 @@ const MainPage: FC = () => {
               isQuestNew={true}
               isChallenge={false}
               isDone={false}
+              stopPropagation={stopPropagation}
             />
           </Backdrop>
         </section>

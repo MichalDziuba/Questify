@@ -105,7 +105,7 @@ const StartPage = () => {
         <div className="ml-2 mr-2 md:w-1/2 lg:w-2/5 ">
           <h1 className=" font-bold text-2xl lg:text-3xl text-azure mt-12">Questify</h1>
           <div className="font-Montserrat mt-8">
-            <div className="  text-xl text-black text-center font-semibold lg:text-2xl lg:text-start">
+            <div className="  text-xl text-deepBlue text-center font-semibold lg:text-2xl lg:text-start">
               Questify will turn your life into a thrilling game full of amazing
               quests and exciting challenges.
             </div>

@@ -10,6 +10,8 @@ import { ButtonDone } from "../buttons/doneButton";
 import { actionEditQuest } from "../../app/actions";
 import { formData } from "../questForm/questForm";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { CompletedModal } from "./completeModal";
+import { stopPropagation } from "../../features/stopPropagation/stopPropagation";
 export type questType = {
   _id: string;
   title: string;
@@ -95,8 +97,10 @@ const Quest: FC<questType> = ({
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={openModalEdit}
           className="w-screen h-full"
+          onClick={handleClose}
         >
           <QuestForm
+            stopPropagation={stopPropagation}
             closeModalFn={handleClose}
             questCategory={category}
             questLevel={level}
@@ -110,39 +114,12 @@ const Quest: FC<questType> = ({
         </Backdrop>
       )}
       {openModalComplete && (
-        <Backdrop
-          sx={{
-            color: "#fffff",
-            position: "absolute",
-            top: "0",
-            width: "100%",
-            height: "100%",
-            zIndex: (theme) => theme.zIndex.drawer + 1,
-          }}
-          open={openModalComplete}
-          className="rounded-2xl"
-        >
-          <div className="flex flex-col justify-around items-center w-11/12 h-4/5 text-white border-solid border-deepBlue border-2 bg-navy rounded-2xl">
-            <p className="text-center text-lg">
-              Do you want to set this {isChallenge ? "challenge" : "quest"} as
-              completed?
-            </p>
-            <div className="flex justify-around items-center w-full text-lg">
-              <button
-                className="w-12 h-8 border-2 border-solid bg-green-500 text-center hover:underline hover:border-green-500"
-                onClick={completeQuest}
-              >
-                Yes
-              </button>
-              <button
-                className="w-12 h-8 border-2 border-solid bg-red-500 hover:underline hover:border-red-500"
-                onClick={() => setOpenModalComplete(false)}
-              >
-                No
-              </button>
-            </div>
-          </div>
-        </Backdrop>
+        <CompletedModal
+          completeQuest={completeQuest}
+          isChallenge={isChallenge}
+          openModalComplete={openModalComplete}
+          setOpenModalComplete={setOpenModalComplete}
+        />
       )}
     </div>
   );

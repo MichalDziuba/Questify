@@ -1,5 +1,6 @@
 import { FC, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
+import { NotFound } from "./components/notFound/notFound";
 import { PrivateRoute } from "./features/privateRoute/privateRoute";
 
 const MainPage = lazy(() => import("./pages/main/main"));
@@ -16,12 +17,7 @@ const App: FC = () => {
 
           <Route
             path="*"
-            element={
-              <div className="flex flex-col  items-center w-screen h-screen">
-                <h2 className="text-2xl mt-12">404</h2>
-                <p className="text-lg">Not found</p>
-              </div>
-            }
+            element={<NotFound/>}
           />
         </Routes>
       </Suspense>

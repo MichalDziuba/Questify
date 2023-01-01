@@ -67,6 +67,9 @@ export const QuestDone = ({
         <button
           className="flex text-center text-gray hover:text-azure "
           onClick={restoreQuest}
+          data-bs-toggle="tooltip"
+          data-bs-placement="right"
+          title="Restore to the list"
         >
           <RiArrowGoBackLine className="fill-azure w-5 h-5 mr-2" />
           Restore
@@ -74,6 +77,9 @@ export const QuestDone = ({
         <SeparatorLine />
         <button
           className="text-gray flex text-center items-center hover:text-azure"
+          data-bs-toggle="tooltip"
+          data-bs-placement="right"
+          title="Delete quest"
           onClick={deleteQuest}
         >
           Delete <BsArrowRight className="fill-azure w-5 h-5 ml-2" />

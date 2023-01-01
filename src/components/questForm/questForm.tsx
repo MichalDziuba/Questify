@@ -44,6 +44,7 @@ type QuestFormProps = {
   isChallenge: boolean;
   id: string;
   isDone: boolean;
+  stopPropagation: React.MouseEventHandler;
 };
 export type deleteQuestData = {
   owner: string;
@@ -59,6 +60,7 @@ const QuestForm = ({
   isChallenge,
   id,
   isDone,
+  stopPropagation,
 }: QuestFormProps) => {
   const getDotColor = (level: string) => {
     switch (level) {
@@ -170,6 +172,7 @@ const QuestForm = ({
 
   return (
     <div
+      onClick={stopPropagation}
       className={`w-72 h-72 rounded-2xl  flex flex-col justify-around items-center font-Montserrat relative  text-black ${
         isQuestChallenge ? "bg-deepBlue " : "bg-white "
       }`}
@@ -186,16 +189,16 @@ const QuestForm = ({
           />
 
           <div className="flex w-4/12 justify-between font-medium mr-3">
+            <ButtonCancel closeModalFn={closeModalFn} />
             {!isQuestNew && (
-              <>
-                <ButtonCancel closeModalFn={closeModalFn} />
-                <SeparatorLine />
+              <> <SeparatorLine />
+                <ButtonDelete
+                  isQuestChallenge={isQuestChallenge}
+                  setModalOpen={setModalOpen}
+                />
+               
               </>
             )}
-            <ButtonDelete
-              isQuestChallenge={isQuestChallenge}
-              setModalOpen={setModalOpen}
-            />
             <SeparatorLine />
             <ButtonStartSave
               isQuestNew={isQuestNew}

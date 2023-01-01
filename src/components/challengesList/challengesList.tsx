@@ -7,10 +7,10 @@ type challengesListProps = {
 
 export const ChallengesList = ({ items }: challengesListProps) => {
   return (
-    <div className="w-11/12 mt-8 flex flex-col justify-center items-center  text-center">
+    <div className="w-full mt-8 flex flex-col justify-center items-center  text-center">
       {items.length > 0 ? (
         <div className="w-full flex flex-col items-center justify-center">
-          <h2 className="text-2xl text-center">
+          <h2 className="text-2xl text-center w-11/12">
             This is your challenges list! Focus on finishing everything!
           </h2>
           <p className="mt-4 ">

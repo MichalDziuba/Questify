@@ -12,6 +12,9 @@ export const StartPageButton = ({ title, fn, activeClass }: startButtonProps) =>
            ? "scale-110 bg-orange shadow-md shadow-orange text-white"
            : "text-gray shadow-md shadow-gray"
        }`}
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      title={`Go to ${title}`}
       onClick={fn}
     >
       {title}
